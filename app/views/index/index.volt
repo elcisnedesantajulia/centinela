@@ -1,7 +1,10 @@
-<div class="page-header">
-  <h1>Congratulations!</h1>
-</div>
+<main role="main">
+  <div class="jumbotron my-3">
+    <div class="col-sm-8 mx-auto">
+      <h1>Index</h1>
 
-<p>You're now flying with Phalcon. Great things are about to happen!</p>
+<p>Index</p>
 
-<p>This page is located at <code>views/index/index.volt</code></p>
+    </div>
+  </div>
+</main>

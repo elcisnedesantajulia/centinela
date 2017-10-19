@@ -12,7 +12,12 @@ use Phalcon\Flash\Direct as Flash;
  * Shared configuration service
  */
 $di->setShared('config', function () {
-    return include APP_PATH . "/config/config.php";
+    $config = include APP_PATH . '/config/config.php';
+    if (is_readable(APP_PATH . '/config/config.dev.php')) {
+        $override = include APP_PATH . '/config/config.dev.php';
+        $config->merge($override);
+    }
+    return $config;
 });
 
 /**
