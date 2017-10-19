@@ -1,6 +1,7 @@
 <?php
 
 use Phalcon\Mvc\View;
+use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
@@ -115,3 +116,11 @@ $di->setShared('session', function () {
 
     return $session;
 });
+
+// Dispatcher usa un namespace por default
+$di->set('dispatcher',function() {
+    $dispatcher = new Dispatcher();
+    $dispatcher->setDefaultNamespace('Centinela\Controllers');
+    return $dispatcher;
+});
+

@@ -1,4 +1,4 @@
-<?php
+<?php namespace Centinela\Controllers;
 
 use Phalcon\Mvc\Controller;
 
