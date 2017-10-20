@@ -3,7 +3,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
 <!-- Brand -->
-    <a class="navbar-brand" href="#">Centinela</a>
+    {{ link_to('index/index','<img src="/c/favicon/favicon-32x32.png" width="28" height="28" alt="Logo Centinela"> Centinela',"class":"navbar-brand") }}
+
 <!-- Boton Colapsa -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" 
           data-target="#colapsa" aria-controls="colapsa" 
@@ -15,7 +16,7 @@
 <!-- Items izquierda <=====  -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Registro</a>
+          {{ link_to('sesion/registro','Registro',"class":"nav-link") }}
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" 
