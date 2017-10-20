@@ -15,21 +15,8 @@
     <div id="colapsa" class="navbar-collapse collapse">
 <!-- Items izquierda <=====  -->
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          {{ link_to('sesion/registro','Registro',"class":"nav-link") }}
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" 
-                id="userMenu" data-toggle="dropdown" 
-                aria-haspopup="true" aria-expanded="false">
-            Usuario
-          </a>
-          <div class="dropdown-menu" aria-labelledby="userMenu">
-            <a class="dropdown-item" href="#">Editar</a>
-          </div>
-        </li>
-        {%for caption, arr_menu in menu %}
-        {%  if arr_menu['hijos'] is defined %}
+        {%for caption, arr_menu in menu         %}
+        {%  if arr_menu['hijos'] is defined     %}
         {%    set arr_hijos = arr_menu['hijos'] %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" 
@@ -38,27 +25,26 @@
             {{ caption }}
           </a>
           <div class="dropdown-menu" aria-labelledby="userMenu">
-        {%  for arr_hijo in arr_hijos %}
-
+        {%  for arr_hijo in arr_hijos           %}
             {{ link_to(arr_hijo[1],arr_hijo[0],"class": "dropdown-item") }}
-        {%  endfor %}
-
+        {%  endfor                              %}
           </div>
         </li>
-        {%  else %}
-
+        {%  else                                %}
         <li class="nav-item">
           {{ link_to(arr_menu['uri'], caption,"class":"nav-link") }}
         </li>
-        {%  endif %}
-        {%endfor%}
+        {%  endif                               %}
+        {%endfor                                %}
       </ul>
 <!-- ====> Items derecha -->
-{% if is_auth == true %}
-{{ partial('partials/userMenu') }}
-{% else %}
-{{ partial('partials/formLogin')}}
-{% endif%}
+{%if is_auth == true                %}
+{{ partial('partials/userMenu')     }}
+{%else                              %}
+{%  if is_registro is not defined   %}
+{{ partial('partials/formLogin')    }}
+{%  endif                           %}
+{%endif                             %}
     </div>
   </div>
 </nav>
