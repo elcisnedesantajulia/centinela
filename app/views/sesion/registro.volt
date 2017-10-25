@@ -11,7 +11,7 @@
         Ingresa tus datos
       </div>
       <div class="card-body">
-        <form class="container" id="registro"  method="post">
+        <form class="container" id="registro" novalidate method="post">
             {{ form.renderInput('nombre') }}
             {{ form.renderInput('email') }}
             {{ form.renderInput('password') }}

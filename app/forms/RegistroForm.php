@@ -21,12 +21,10 @@ class RegistroForm extends Form
             'class'=>'form-control',
             'required'=>true,
         ]);
-        $nombre->setUserOption('clientSide','cl:El nombre es requerido');
-        $nombre->addValidators([
-            new PresenceOf([
-                'message'=>'El nombre es requerido'
-            ]),
-        ]);
+        $nombre->setUserOption('clientSide','El nombre es requerido');
+        $nombre->addValidator(new PresenceOf([
+            'message'=>'El nombre es requerido'
+        ]));
         $this->add($nombre);
 
         //EMAIL
@@ -35,13 +33,10 @@ class RegistroForm extends Form
             'class'=>'form-control',
             'required'=>true,
         ]);
-        $email->setUserOption('clientSide','cl:Introduce un email válido');
-        $email->addValidators([
-            new EmailValidator([
-                'message'=>'El email no es valido, verificalo e ingresalo '.
-                    'correctamente'
-            ]),
-        ]);
+        $email->setUserOption('clientSide','Introduce un email válido');
+        $email->addValidator(new EmailValidator([
+            'message'=>'El email no es valido, verificalo e ingresalo correctamente'
+        ]));
         $this->add($email);
 
         //PASSWORD
@@ -50,14 +45,12 @@ class RegistroForm extends Form
             'class'=>'form-control',
             'pattern'=>'.{8,}',
         ]);
-        $password->setUserOption('clientSide','cl:El password debe tener al menos '.
+        $password->setUserOption('clientSide','El password debe tener al menos '.
             '8 caracteres');
-        $password->addValidators([
-            new StringLength([
-                'min'=>8,
-                'messageMinimum'=>'El password debe tener al menos 8 caracteres',
-            ]),
-        ]);
+        $password->addValidator(new StringLength([
+            'min'=>8,
+            'messageMinimum'=>'El password debe tener al menos 8 caracteres',
+        ]));
         $this->add($password);
 
         //CONFIRMAR
@@ -66,14 +59,12 @@ class RegistroForm extends Form
             'class'=>'form-control',
             'pattern'=>'.{8,}',
         ]);
-        $confirmar->setUserOption('clientSide','cl:El password debe tener al menos 8 '.
+        $confirmar->setUserOption('clientSide','El password debe tener al menos 8 '.
             'caracteres');
-        $confirmar->addValidators([
-            new Confirmation([
-                'message'=>'La confirmacion no coincide con el password',
-                'with'=>'password',
-            ]),
-        ]);
+        $confirmar->addValidator(new Confirmation([
+            'message'=>'La confirmacion no coincide con el password',
+            'with'=>'password',
+        ]));
         $this->add($confirmar);
 
         // Cross Site Request Forgery

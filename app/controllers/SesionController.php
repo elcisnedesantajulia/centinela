@@ -2,6 +2,8 @@
 
 use Centinela\Models\Usuarios;
 use Centinela\Forms\RegistroForm;
+use Centinela\Forms\LoginForm;
+use Centinela\Exception;
 
 class SesionController extends ControllerBase
 {
@@ -41,5 +43,30 @@ class SesionController extends ControllerBase
         $this->view->setVar('is_registro',true);
     }
 
+    public function loginAction()
+    {
+        $form = new LoginForm();
+        try{
+            if($this->request->isPost()){
+                if($form->isValid($this->request->getPost()) == false){
+                    $mensajes = $form->getMessages();
+                    $this->flash->error($mensajes[0]);
+                }else{
+                    $this->auth->check([
+                        'email'     =>$this->request->getPost('email'),
+                        'password'  =>$this->request->getPost('password'),
+                    ]);
+                    return $this->response->redirect('index');
+                }
+            }
+        } catch (Exception $e){
+            $this->flash->error($e->getMessage());
+        }
+    }
+
+    public function logoutAction(){
+        $this->auth->remove();
+        return $this->response->redirect('index');
+    }
 }
 

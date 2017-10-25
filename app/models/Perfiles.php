@@ -1,5 +1,4 @@
-<?php
-namespace Rosh\Models;
+<?php namespace Centinela\Models;
 
 use Phalcon\Mvc\Model;
 

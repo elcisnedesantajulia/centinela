@@ -5,11 +5,10 @@
       <a class="nav-link dropdown-toggle" href="#" 
             id="userMenu" data-toggle="dropdown" 
             aria-haspopup="true" aria-expanded="false">
-        Usuario
+        {{ auth.getNombre() }}
       </a>
       <div class="dropdown-menu" aria-labelledby="userMenu">
-        <a class="dropdown-item" href="#">Editar</a>
-        {{ link_to('session/logout', 'Inicia sesion', "class":"dropdown-item") }}
+        {{ link_to('sesion/logout', 'Cerrar sesión', "class":"dropdown-item") }}
       </div>
     </li>
   </ul>

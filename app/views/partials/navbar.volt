@@ -15,9 +15,8 @@
     <div id="colapsa" class="navbar-collapse collapse">
 <!-- Items izquierda <=====  -->
       <ul class="navbar-nav mr-auto">
-        {%for caption, arr_menu in menu         %}
-        {%  if arr_menu['hijos'] is defined     %}
-        {%    set arr_hijos = arr_menu['hijos'] %}
+        {%for caption, element in menu         %}
+        {%  if element is type('array')     %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" 
                 id="userMenu" data-toggle="dropdown" 
@@ -25,14 +24,14 @@
             {{ caption }}
           </a>
           <div class="dropdown-menu" aria-labelledby="userMenu">
-        {%  for arr_hijo in arr_hijos           %}
-            {{ link_to(arr_hijo[1],arr_hijo[0],"class": "dropdown-item") }}
+        {%  for caption,uri in element           %}
+            {{ link_to(uri,caption,"class": "dropdown-item") }}
         {%  endfor                              %}
           </div>
         </li>
         {%  else                                %}
         <li class="nav-item">
-          {{ link_to(arr_menu['uri'], caption,"class":"nav-link") }}
+          {{ link_to(element, caption,"class":"nav-link") }}
         </li>
         {%  endif                               %}
         {%endfor                                %}
