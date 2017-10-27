@@ -1,19 +1,20 @@
 <?php
 namespace Centinela\Forms;
 
-use Phalcon\Forms\Form;
+//use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
-use Phalcon\Forms\Element\Email;
+//use Phalcon\Forms\Element\Email;
 use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Password;
 //use Phalcon\Validation\Validator\PresenceOf;
-use Phalcon\Validation\Validator\Email as EmailValidator;
+//use Phalcon\Validation\Validator\Email as EmailValidator;
 use Phalcon\Validation\Validator\StringLength;
 use Phalcon\Validation\Validator\Confirmation;
 use Centinela\Models\Perfiles;
 use Centinela\FormElementsFactory as Factory;
+use Centinela\Bootstrap4Form as Form;
 
 class UsuariosForm extends Form
 {
@@ -78,7 +79,7 @@ class UsuariosForm extends Form
 //            'emptyValue'=>'',
             'class'=>'form-control'
         ]);
-        $this->add($sel_perfiles);
+        $this->add($factory->perfiles());
         
         $bloqueado=new Check('bloqueado',[
             'class'=>'form-check-input',
@@ -86,93 +87,5 @@ class UsuariosForm extends Form
         $bloqueado->setLabel('Selecciona para bloquear');
         $this->add($bloqueado);
     }
-
-    public function renderInput($name){
-        $element=$this->get($name);
-        //Mensaje por defecto - client side
-/*        $invalidMessage='Falta introducir este campo';
-        if($this->hasMessagesFor($name)){
-            $mensajes = $this->getMessagesFor($name);
-            // Mensaje - server side
-            $invalidMessage=$mensajes[0]->getMessage();
-        }else{
-            $invalidMessage = $element->getUserOption('clientSide',false)
-                ? $element->getUserOption('clientSide') : $invalidMessage;
-        }
-        if($element->getUserOption('valid',false) == true){
-            $invalidMessage = '';
-        }
-*/
-        $render = $element->render();
-        return <<<html
-<div class="form-group">
-  $render
-  <!--div class="invalid-feedback">invalidMessage</div-->
-</div>
-html;
-    }
-
-    public function renderSelectAsRadio($name){
-        $element=$this->get($name);
-
-        $opts = $element->getOptions();
-        $value = $element->getValue();
-//var_dump($value); exit;
-        $html_opts='';
-        foreach ($opts as $op_label) {
-            $id = $op_label->id;
-            $checked = ($id == $value) ? 'checked' : '' ;
-            $active = ($id == $value) ? 'active' : '' ;
-//var_dump($op_value); exit;
-            $caption = $op_label->caption;
-            $html_opts.=<<<html
-<label class="btn btn-outline-info $active">
-    <input type="radio" name="$name" value="$id" $checked id="$id" autocomplete="off"/>
-        $caption<br/>
-</label>
-html;
-        
-        }
-
-        return <<<html
-<div class="btn-group" data-toggle="buttons">
-  $html_opts
-</div>
-html;
-    }
-
-    public function renderSelect($name){
-        $element=$this->get($name);
-        $render = $element->render();
-        return <<<html
-<div class="form-group">
-  $render
-</div>
-html;
-    }
-
-    public function renderCheck($name){
-        $element=$this->get($name);
-        $render = $element->render();
-        $label = $element->getLabel();
-return <<<html
-<div class="form-check">
-  <label class="form-check-label">
-    $render
-    $label
-  </label>
-</div>
-html;
-    }
-
-/*
-    public function mensajes($name){
-        if($this->hasMessagesFor($name)){
-            foreach($this->getMessagesFor($name) as $message){
-                $this->flash->error($message);
-            }
-        }
-    }
-*/
 }
 

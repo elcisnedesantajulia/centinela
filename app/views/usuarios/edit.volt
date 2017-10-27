@@ -12,17 +12,17 @@
       </div>
       <div class="card-body">
         <form class="container" id="usuario" novalidate method="post">
-            {{ form.renderInput('nombre') }}
-            {{ form.renderInput('email') }}
+            {{ form.render('nombre') }}
+            {{ form.render('email') }}
 
-            {{ form.renderSelectAsRadio('perfilId') }}
+            {{ form.render('perfilId') }}
 
             {{ form.renderCheck('bloqueado') }}
             {#{ form.renderInput('confirmar') }#}
           <div class="form-group">
             {#{ form.render('csrf', ['value': security.getToken()]) }}
             {{ form.render('Registrar') }#}
-            {{ submit_button("Guardar", "class": "btn btn-outline-success") }}
+            {{ submit_button("Guardar", "class": "btn btn-outline-success btn-block") }}
             <span class="help-block">{#{ form.mensajes('csrf') }#}</span>
           </div>
         </form>
