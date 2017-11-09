@@ -68,6 +68,7 @@ class UsuariosController extends ControllerBase
         if(!$usuario){
             $this->flash->error('No se encontro el usuario');
             return $this->dispatcher->forward([
+                'controller'=>'usuarios',
                 'action'=>'index'
             ]);
         }
@@ -90,6 +91,7 @@ class UsuariosController extends ControllerBase
                 }else{
                     $this->flash->success('Se guardaron los cambios');
                     return $this->dispatcher->forward([
+                        'controller'=>'usuarios',
                         'action'=>'index'
                     ]);                
                 }
@@ -120,35 +122,34 @@ class UsuariosController extends ControllerBase
         ]);
     }
 
-    public function changePasswordAction($id){
-        $identity=$this->auth->getIdentity();
-//        $id=$identity['perfil']=='Administradores'?$id:$identity['id'];
+    public function passwordAction($id){
         $usuario = Usuarios::findFirstById($id);
         if(!$usuario){
             $this->flash->error('No se encontro el usuario');
             return $this->dispatcher->forward([
-                'controller'=>'index',
+                'controller'=>'usuarios',
                 'action'=>'index'
             ]);
         }
         $form = new ChangePasswordForm();
         if($this->request->isPost()){
-            if(!$form->isValid($this->request->getPost())){
-                foreach($form->getMessages() as $message){
-                    $this->flash->error($message);
-                }
-            }else{
+            if($form->isValid($this->request->getPost())){
                 $usuario->password=$this->security->hash($this->request->getPost('password'));
                 if(!$usuario->save()){
                     $this->flash->error($user-getMessages());
                 }else{
                     $this->flash->success('El password ha sido cambiado');
-//                    Tag::resetInput();
+                    return $this->dispatcher->forward([
+                        'controller'=>'usuarios',
+                        'action'=>'index'
+                    ]);
                 }
             }
         }
         $this->view->usuario = $usuario;
+        $this->view->back='usuarios/index';
         $this->view->form = $form;
+        $this->view->tags = new Tags;
     }
 }
 

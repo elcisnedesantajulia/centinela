@@ -12,6 +12,7 @@ class Usuarios extends Model
     const NO_BORRADO = 0;
 
     public $id;
+    public $mtime;
     public $ctime;
     public $nombre;
     public $email;
@@ -25,9 +26,6 @@ class Usuarios extends Model
             'alias'     =>'perfil',
             'reusable'  =>true, // cacheado implicitamente
         ]);
-        $this->skipAttributesOnUpdate([
-            'password',
-        ]);
         $this->addBehavior(new SoftDelete([
             'field'=>'borrado',
             'value'=>Usuarios::BORRADO,
@@ -35,6 +33,10 @@ class Usuarios extends Model
         $this->addBehavior(new Timestampable([
             'beforeCreate'=>[
                 'field'=>'ctime',
+                'format'=>'Y-m-d H:i:s',
+            ],
+            'beforeUpdate'=>[
+                'field'=>'mtime',
                 'format'=>'Y-m-d H:i:s',
             ],
         ]));
