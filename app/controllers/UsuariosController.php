@@ -16,7 +16,7 @@ class UsuariosController extends ControllerBase
         // Si no existe $_GET['page'] la pagina es 1
         $page = $this->request->getQuery('page', 'int', 1);
         // TODO revisar si es post y formar un Criteria
-        $params = [];
+        $params = ["borrado = 0"];
         // TODO buscar si hay params en la sesion
         $usuarios = Usuarios::find($params);
         if(count($usuarios) == 0){
@@ -102,12 +102,12 @@ class UsuariosController extends ControllerBase
         $this->view->tags = new Tags;
     }
 
-    public function deleteAction($id_usuario){
-        $usuario = AclUsuarios::findFirstByIdUsuario($id_usuario);
+    public function deleteAction($id){
+        $usuario = Usuarios::findFirstById($id);
         if(!$usuario){
             $this->flash->error('No se encontro el usuario');
             return $this->dispatcher->forward([
-                'action'=>'search'
+                'action'=>'index'
             ]);
         }
         if(!$usuario->delete()){
@@ -116,13 +116,13 @@ class UsuariosController extends ControllerBase
             $this->flash->success('El usuario fue borrado');
         }
         return $this->dispatcher->forward([
-            'action'=>'search'
+            'action'=>'index'
         ]);
     }
 
     public function changePasswordAction($id){
         $identity=$this->auth->getIdentity();
-        $id=$identity['perfil']=='Administradores'?$id:$identity['id'];
+//        $id=$identity['perfil']=='Administradores'?$id:$identity['id'];
         $usuario = Usuarios::findFirstById($id);
         if(!$usuario){
             $this->flash->error('No se encontro el usuario');

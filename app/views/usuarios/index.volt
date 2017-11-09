@@ -29,7 +29,7 @@
       <td>{{ usuario.bloqueado == 1 ? 'Sí' : 'No' }}</td> 
       <td>
         {{ tags.btnEdit('usuarios/edit/'~usuario.id,'Editar usuario') }}
-        {{ tags.btnDelete('usuarios/delete/'~usuario.id,'Borrar usuario') }}
+        {{ tags.btnDeleteUser(usuario.id,usuario.nombre) }}
         {{ tags.btnPassword('usuarios/password/'~usuario.id,'Cambiar password') }}
       </td>
     </tr>
@@ -40,6 +40,7 @@
 {% else                             %}
 No hay resultados
 {% endfor                           %}
+{{ partial('partials/deleteUserModal') }}
 <!--                    >
 < @end usuarios/index -->
 

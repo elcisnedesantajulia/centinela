@@ -16,6 +16,17 @@ class TagsFactory
         return $this->btnIcon($href,'trash','danger',$title);
     }
 
+    public function btnDeleteUser($id,$name){
+        return <<<html
+<span data-toggle="tooltip" data-placement="top" title='Borrar usuario'>
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" 
+      data-target="#deleteUserModal" data-userid="$id" data-username="$name" >    
+  <span class="oi oi-trash"></span>
+</button>
+</span>
+html;
+    }
+
     public function btnIcon($href,$icon,$color,$title){
         return Tag::linkTo([
             $href,
