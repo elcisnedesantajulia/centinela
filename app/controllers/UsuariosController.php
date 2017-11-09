@@ -34,22 +34,20 @@ class UsuariosController extends ControllerBase
     }
 
     public function createAction(){
-        $form = new UsuariosForm(null);
+        $form = new UsuariosForm();
         if($this->request->isPost()){
-            if($form->isValid($this->request->getPost())==false){
-                foreach($form->getMessages() as $message){
-                    $this->flash->error($message);
-                }
-            }else{
+            if($form->isValid($this->request->getPost())){
                 $id_perfil=$this->request->getPost('id_perfil','int');
-                $usuario = new AclUsuarios([
+                $usuario = new Usuarios([
                     'nombre'    =>$this->request->getPost('nombre','striptags'),
                     'email'     =>$this->request->getPost('email','email'),
-                    'password'  =>$this->security->hash($this->request->getPost('password')),
-                    'id_perfil' =>$id_perfil==0?1:$id_perfil,
+                    'password'  =>$this->security->hash(
+                        $this->request->getPost('password')),
+                    'perfilId'  =>$this->request->getPost('perfilId','int'),
+                    'bloqueado' =>0,
                 ]);
                 if(!$usuario->save()){
-                    $this->flash->error($usuario->getMessages());
+                    $this->flash->notice($usuario->getMessages());
                 }
                 else{
                     $this->flash->success('El usuario ha sido creado!');
@@ -60,8 +58,9 @@ class UsuariosController extends ControllerBase
                 }
             }
         }
-        $this->view->url_back=$this->url->get('usuarios/search');
+        $this->view->back='usuarios/index';
         $this->view->form = $form;
+        $this->view->tags = new Tags;
     }
 
     public function editAction($id){
@@ -72,36 +71,35 @@ class UsuariosController extends ControllerBase
                 'action'=>'index'
             ]);
         }
+        $form = new UsuariosForm($usuario,[
+            'edit'=>true
+        ]);
         if($this->request->isPost()){
             $usuario->assign([
                 'nombre'    =>$this->request->getPost('nombre','striptags'),
-                'id_perfil' =>$this->request->getPost('id_perfil','int'),
                 'email'     =>$this->request->getPost('email','email'),
-                'bloqueado' =>$this->request->getPost('bloqueado'),
+                'perfilId'  =>$this->request->getPost('perfilId','int'),
+                'bloqueado' =>($this->request->getPost('bloqueado'))? 1 : 0 ,
             ]);
             $form = new UsuariosForm($usuario,[
                 'edit'=>true
             ]);
-            if($form->isValid($this->request->getPost())==false){
-                foreach($form->getMessages() as $message){
-                    $this->flash->error($message);
-                }
-            }else{
+            if($form->isValid($this->request->getPost())){
                 if(!$usuario->save()){
-                    $this->flash->error($usuario->getMessages());
+                    $this->flash->notice($usuario->getMessages());
                 }else{
                     $this->flash->success('Se guardaron los cambios');
                     return $this->dispatcher->forward([
-                        'action'=>'search'
+                        'action'=>'index'
                     ]);                
                 }
             }
         }
-        $this->view->url_back=$this->url->get('usuarios/search');
+//        $this->view->url_back=$this->url->get('usuarios/search');
         $this->view->usuario = $usuario;
-        $this->view->form = new UsuariosForm($usuario,[
-            'edit'=>'true'
-        ]);
+        $this->view->back='usuarios/index';
+        $this->view->form = $form;
+        $this->view->tags = new Tags;
     }
 
     public function deleteAction($id_usuario){

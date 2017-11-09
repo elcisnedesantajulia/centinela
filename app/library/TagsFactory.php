@@ -29,5 +29,38 @@ class TagsFactory
             'data-placement'=>'top'
         ]);
     }
+
+    public function btnCreateUser(){
+        return $this->btnIconText('usuarios/create','person','success'
+            ,'Crear nuevo usuario');
+    }
+
+    public function btnRegresar($href){
+        return $this->btnIconText($href,'action-undo','danger','Regresar');
+    }
+
+    public function btnIconText($href,$icon,$color,$text){
+        return Tag::linkTo([
+            $href,
+            // Open iconic https://useiconic.com/ope
+            '<span class="oi oi-'.$icon.'"></span> '.$text,
+            // Bootstrap 4 https://getbootstrap.com/docs/4.0/utilities/colors/
+            'class' =>'btn btn-outline-'.$color,
+            'role'  =>'button',
+        ]);
+    }
+
+    public function submitSuccess($caption){
+        $submit = Tag::submitButton([
+            $caption,
+            'class' => 'btn btn-outline-success btn-block',
+        ]);
+
+        return <<<html
+<div class="form-group">
+$submit
+</div>
+html;
+    }
 }
 

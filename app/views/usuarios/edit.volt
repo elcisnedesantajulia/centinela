@@ -1,6 +1,10 @@
-<!-- @start registro >
-<                  -->
+<!-- @start usuariosEdit >
+<                      -->
 {{ content() }}
+
+<div class="text-right py-3">
+  {{ tags.btnRegresar(back) }}
+</div>
 
 <div class="row">
   <div class="col-lg-3">
@@ -12,25 +16,17 @@
       </div>
       <div class="card-body">
         <form class="container" id="usuario" novalidate method="post">
-            {{ form.render('nombre') }}
-            {{ form.render('email') }}
-
-            {{ form.render('perfilId') }}
-
-            {{ form.renderCheck('bloqueado') }}
-            {#{ form.renderInput('confirmar') }#}
-          <div class="form-group">
-            {#{ form.render('csrf', ['value': security.getToken()]) }}
-            {{ form.render('Registrar') }#}
-            {{ submit_button("Guardar", "class": "btn btn-outline-success btn-block") }}
-            <span class="help-block">{#{ form.mensajes('csrf') }#}</span>
-          </div>
+          {{ form.render('nombre') }}
+          {{ form.render('email') }}
+          {{ form.render('perfilId') }}
+          {{ form.render('bloqueado') }}
+          {{ tags.submitSuccess('Guardar cambios') }}
         </form>
       </div>
     </div>
   </div>
 </div>
 {{ partial('partials/jsFormValidation',['id':'usuario']) }}
-<!--              >
-< @end registro -->
+<!--                  >
+< @end usuariosEdit -->
 

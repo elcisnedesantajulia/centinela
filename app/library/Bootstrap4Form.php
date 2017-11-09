@@ -1,5 +1,6 @@
 <?php namespace Centinela;
 
+use Phalcon\Tag;
 use Phalcon\Forms\Form;
 
 class Bootstrap4Form extends Form
@@ -14,10 +15,19 @@ class Bootstrap4Form extends Form
         return parent::render($name,$attributes);
     }
 
+    public function afterValidation(){
+        foreach($this as $element){
+            if($this->hasMessagesFor($element->getName())){
+                $element->setUserOption('valid','invalid');
+            }else{
+                $element->setUserOption('valid','valid');
+            }
+        }
+    }
+
     public function renderText($name){
         $element=$this->get($name);
         $htmlClasses=['form-control'];
-//var_dump($element); exit;
         //Mensaje por defecto - client side
         $invalidMessage='Falta introducir este campo';
         if($this->hasMessagesFor($name)){
@@ -28,8 +38,12 @@ class Bootstrap4Form extends Form
             $invalidMessage = $element->getUserOption('clientSide',false)
                 ? $element->getUserOption('clientSide') : $invalidMessage;
         }
-        if($element->getUserOption('valid',false) == true){
+        $valid=$element->getUserOption('valid',false);
+        if($valid == 'valid'){
             $invalidMessage = '';
+            $htmlClasses[]='is-valid';
+        }elseif($valid == 'invalid'){
+            $htmlClasses[]='is-invalid';
         }
 
         $element->setAttribute('class',implode(' ',$htmlClasses));
@@ -47,13 +61,11 @@ html;
 
         $opts = $element->getOptions();
         $value = $element->getValue();
-//var_dump($value); exit;
         $html_opts='';
         foreach ($opts as $op_label) {
             $id = $op_label->id;
             $checked = ($id == $value) ? 'checked' : '' ;
             $active = ($id == $value) ? 'active' : '' ;
-//var_dump($op_value); exit;
             $caption = $op_label->caption;
             $html_opts.=<<<html
 <label class="btn btn-outline-info $active">
@@ -71,6 +83,7 @@ html;
 
     public function renderSelect($name){
         $element=$this->get($name);
+        $element->setAttribute('class','form-control');
         $render = $element->render();
         return <<<html
 <div class="form-group">
@@ -81,6 +94,7 @@ html;
 
     public function renderCheck($name){
         $element=$this->get($name);
+        $element->setAttribute('class','form-check-input');
         $render = $element->render();
         $label = $element->getLabel();
 return <<<html

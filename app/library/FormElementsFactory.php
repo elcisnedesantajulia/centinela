@@ -2,21 +2,17 @@
 
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Email;
+use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Select;
+use Phalcon\Forms\Element\Password;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\StringLength;
+use Phalcon\Validation\Validator\Confirmation;
 use Phalcon\Validation\Validator\Email as EmailValidator;
 use Centinela\Models\Perfiles;
 
 class FormElementsFactory
 {
-//    private $htmlClass;
-/*
-    public function __construct($is_inline = false){
-        $htmlClass='form-control';
-        $htmlClass .= $is_inline==true ? ' mb-2 mr-sm-2 mb-sm-0' : '';
-        $this->htmlClass = $htmlClass;
-    }
-*/
     public function nombre(){
         return $this->textRequired('nombre','Nombre','El nombre es requerido');
     }
@@ -25,8 +21,45 @@ class FormElementsFactory
         return $this->emailValido('email','Email','Introduce un email válido');
     }
 
-    public function perfiles()
-    {
+    public function userId(){
+        $id = new Text('id',[
+            'placeholder'=>'ID de usuario',
+        ]);
+        $id->setFilters('int');
+
+        return $id;
+    }
+
+    public function password(){
+        $message = 'El password debe tener al menos 8 caracteres';
+        $password = new Password('password',[
+            'placeholder'=>'Password',
+            'pattern'=>'.{8,}',
+        ]);
+        $password->setUserOption('clientSide',$message);
+        $password->addValidator(new StringLength([
+            'min'=>8,
+            'messageMinimum'=>$message,
+        ]));
+        $password->setUserOption('decorator','renderText');
+
+        return $password;
+    }
+
+    public function confirmar(){
+        $confirmar = new Password('confirmar',[
+            'placeholder'=>'Confirmar password',
+        ]);
+        $confirmar->addValidator(new Confirmation([
+            'message'=>'La Confirmacion no coincide con el Password',
+            'with'=>'password',
+        ]));
+        $confirmar->setUserOption('decorator','renderText');
+
+        return $confirmar;
+    }
+
+    public function perfiles(){
         // TODO implementar reglas segun los privilegios de usuario
         $perfiles = Perfiles::find([
             'activo = :activo:',
@@ -35,9 +68,20 @@ class FormElementsFactory
         $selectPerfiles =  new Select('perfilId',$perfiles,[
             'using' => ['id','caption'],
         ]);
-        $selectPerfiles->setUserOption('decorator','renderSelectAsRadio');
+        $selectPerfiles->setDefault(4);
+        $selectPerfiles->setUserOption('decorator','renderSelect');
 
         return $selectPerfiles;
+    }
+
+    public function bloqueado(){
+        $bloqueado=new Check('bloqueado',[
+            'value' => 1,
+        ]);
+        $bloqueado->setLabel('Usuario bloqueado');
+        $bloqueado->setUserOption('decorator','renderCheck');
+
+        return $bloqueado;
     }
 
     public function textRequired($name,$caption,$message){
@@ -74,7 +118,6 @@ class FormElementsFactory
     private function configDefault($element,$caption,$message){
         $element->setAttributes([
             'placeholder'=>$caption,
-//            'class'=>$this->htmlClass,
             'required'=>true,
         ]);
         $element->setUserOption('clientSide',$message);

@@ -2,23 +2,9 @@
 <                        -->
 {{ content() }}
 
-{#
-<div class="card bg-light mb-2">
-  <div class="card-body">
-    <form class="form-inline" method="post">
-      <span class="mb-2 mr-sm-2 mb-sm-0">Filtrar resultados</span>
-        {{ form.renderInput('nombre') }}
-        {{ form.renderInput('email') }}
-      <div class="form-group">
-        {{ form.render('perfilId',['class':'form-control mb-2 mr-sm-2 mb-sm-0']) }}
-      </div>
-      <div class="form-group">
-        {{ submit_button("Buscar", "class": "btn btn-outline-success btn-block") }}
-      </div>
-    </form>
-  </div>
+<div class="text-right py-3">
+  {{ tags.btnCreateUser() }}
 </div>
-#}
 
 {% for usuario in paginator.items   %}
 {% if loop.first                    %}
@@ -29,16 +15,18 @@
       <th>Nombre</th>
       <th>Email</th>
       <th>Perfil</th>
-      <th>Acciones</th>
+      <th>Bloqueado</th>
+      <th class="col-lg-auto">Acciones</th>
     </tr>
   </thead>
   <tbody>
 {% endif                            %}
-    <tr>
+    <tr {{ usuario.bloqueado == 1 ? 'class="table-danger"' : '' }}>
       <td>{{ usuario.id }}</td>
       <td>{{ usuario.nombre }}</td>
       <td>{{ usuario.email }}</td>
       <td>{{ usuario.perfil.caption }}</td>
+      <td>{{ usuario.bloqueado == 1 ? 'Sí' : 'No' }}</td> 
       <td>
         {{ tags.btnEdit('usuarios/edit/'~usuario.id,'Editar usuario') }}
         {{ tags.btnDelete('usuarios/delete/'~usuario.id,'Borrar usuario') }}

@@ -41,7 +41,7 @@ class Usuarios extends Model
     }
 
     // Valida que los emails sean unicos por usuario
-    public function Validation(){
+    public function validation(){
         $validator = new Validation();
         $validator->add('email',new Uniqueness([
             'message' => 'El email ya fue registrado',
