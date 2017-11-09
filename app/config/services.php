@@ -119,11 +119,35 @@ $di->setShared('session', function () {
 });
 
 // Dispatcher usa un namespace por default
-$di->set('dispatcher',function() {
-    $dispatcher = new Dispatcher();
-    $dispatcher->setDefaultNamespace('Centinela\Controllers');
-    return $dispatcher;
-});
+$di->set(
+    'dispatcher',
+    function() use ($di) {
+        $evManager = $di->getShared('eventsManager');
+
+        $evManager->attach(
+            "dispatch:beforeException",
+            function($event, $dispatcher, $exception){
+                switch ($exception->getCode()) {
+                    case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                    case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                        $dispatcher->forward(
+                            array(
+                                'controller' => 'error',
+                                'action'     => 'show404',
+                            )
+                        );
+                        return false;
+                }
+            }
+        );
+
+        $dispatcher = new Dispatcher();
+        $dispatcher->setEventsManager($evManager);
+        $dispatcher->setDefaultNamespace('Centinela\Controllers');
+        return $dispatcher;
+    },
+    true
+);
 
 // Componente de autenticacion/identidad
 $di->set('auth',function() {
