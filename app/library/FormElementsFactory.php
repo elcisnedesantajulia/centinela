@@ -4,10 +4,12 @@ use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Email;
 use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Select;
+use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Password;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\StringLength;
 use Phalcon\Validation\Validator\Confirmation;
+use Phalcon\Validation\Validator\Identical;
 use Phalcon\Validation\Validator\Email as EmailValidator;
 use Centinela\Models\Perfiles;
 
@@ -82,6 +84,17 @@ class FormElementsFactory
         $bloqueado->setUserOption('decorator','renderCheck');
 
         return $bloqueado;
+    }
+
+    public function csrf($value){
+        $csrf = new Hidden('csrf');
+        $csrf->addValidator(new Identical([
+            'value' => $value,
+            'message' => 'Error de validacion (CSRF)',
+        ]));
+        $csrf->clear();
+
+        return $csrf;
     }
 
     public function textRequired($name,$caption,$message){

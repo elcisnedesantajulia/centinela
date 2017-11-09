@@ -12,15 +12,15 @@
       </div>
       <div class="card-body">
         <form class="container" id="registro" novalidate method="post">
-            {{ form.renderInput('nombre') }}
-            {{ form.renderInput('email') }}
-            {{ form.renderInput('password') }}
-            {{ form.renderInput('confirmar') }}
+            {{ form.render('nombre') }}
+            {{ form.render('email') }}
+            {{ form.render('password') }}
+            {{ form.render('confirmar') }}
           <div class="form-group">
             {{ form.render('csrf', ['value': security.getToken()]) }}
-            {{ form.render('Registrar') }}
-            <span class="help-block">{{ form.mensajes('csrf') }}</span>
+            <span class="text-danger">{{ form.mensajes('csrf') }}</span>
           </div>
+            {{ tags.submitSuccess('Registrar') }}
         </form>
       </div>
     </div>

@@ -4,6 +4,7 @@ use Centinela\Models\Usuarios;
 use Centinela\Forms\RegistroForm;
 use Centinela\Forms\LoginForm;
 use Centinela\Exception;
+use Centinela\TagsFactory as Tags;
 
 class SesionController extends ControllerBase
 {
@@ -40,6 +41,7 @@ class SesionController extends ControllerBase
             }
         }
         $this->view->form = $form;
+        $this->view->tags = new Tags;
         $this->view->setVar('is_registro',true);
     }
 
