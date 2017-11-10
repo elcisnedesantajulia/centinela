@@ -9,6 +9,7 @@ use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
 use Centinela\Auth;
+use Centinela\TagsFactory;
 
 /**
  * Shared configuration service
@@ -152,5 +153,10 @@ $di->set(
 // Componente de autenticacion/identidad
 $di->set('auth',function() {
     return new Auth();
+});
+
+// Tags Factory
+$di->set('tags',function() {
+    return new TagsFactory();
 });
 

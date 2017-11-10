@@ -6,12 +6,10 @@ use Centinela\Forms\UsuariosForm;
 use Centinela\Forms\ChangePasswordForm;
 use Centinela\Models\Usuarios;
 use Centinela\PaginatorModel as Paginator;
-use Centinela\TagsFactory as Tags;
 
 class UsuariosController extends ControllerBase
 {
     public function indexAction(){
-//        $this->view->url_create=$this->url->get('usuarios/create');
         $this->view->form = new UsuariosForm();
         // Si no existe $_GET['page'] la pagina es 1
         $page = $this->request->getQuery('page', 'int', 1);
@@ -30,10 +28,10 @@ class UsuariosController extends ControllerBase
             'adjacents' =>5,
         ]);
         $this->view->paginator = $paginator->getPaginate();
-        $this->view->tags = new Tags;
     }
 
-    public function createAction(){
+    public function createAction()
+    {
         $form = new UsuariosForm();
         if($this->request->isPost()){
             if($form->isValid($this->request->getPost())){
@@ -50,28 +48,17 @@ class UsuariosController extends ControllerBase
                     $this->flash->notice($usuario->getMessages());
                 }
                 else{
-                    $this->flash->success('El usuario ha sido creado!');
-                    return $this->dispatcher->forward([
-                        'controller'=>'usuarios',
-                        'action'=>'index'
-                    ]);
+                    $this->redirectIndex('El usuario ha sido creado!');
                 }
             }
         }
-        $this->view->back='usuarios/index';
+        $this->view->back = 'usuarios/index';
         $this->view->form = $form;
-        $this->view->tags = new Tags;
     }
 
-    public function editAction($id){
-        $usuario = Usuarios::findFirstById($id);
-        if(!$usuario){
-            $this->flash->error('No se encontro el usuario');
-            return $this->dispatcher->forward([
-                'controller'=>'usuarios',
-                'action'=>'index'
-            ]);
-        }
+    public function editAction($id)
+    {
+        $usuario = $this->findUserByIdOrRedirect($id);
         $form = new UsuariosForm($usuario,[
             'edit'=>true
         ]);
@@ -87,69 +74,60 @@ class UsuariosController extends ControllerBase
             ]);
             if($form->isValid($this->request->getPost())){
                 if(!$usuario->save()){
-                    $this->flash->notice($usuario->getMessages());
-                }else{
-                    $this->flash->success('Se guardaron los cambios');
-                    return $this->dispatcher->forward([
-                        'controller'=>'usuarios',
-                        'action'=>'index'
-                    ]);                
+                    $this->redirectIndex(implode("\n",$usuario->getMessages()),'error');
                 }
+                $this->redirectIndex('Se guardaron los cambios');
             }
         }
-//        $this->view->url_back=$this->url->get('usuarios/search');
         $this->view->usuario = $usuario;
-        $this->view->back='usuarios/index';
+        $this->view->back = 'usuarios/index';
         $this->view->form = $form;
-        $this->view->tags = new Tags;
     }
 
-    public function deleteAction($id){
-        $usuario = Usuarios::findFirstById($id);
-        if(!$usuario){
-            $this->flash->error('No se encontro el usuario');
-            return $this->dispatcher->forward([
-                'action'=>'index'
-            ]);
-        }
+    public function deleteAction($id)
+    {
+        $usuario = $this->findUserByIdOrRedirect($id);
         if(!$usuario->delete()){
-            $this->flash->error($usuario->getMessages());
-        }else{
-            $this->flash->success('El usuario fue borrado');
+            $this->redirectIndex(implode("\n",$usuario->getMessages()),'error');
         }
-        return $this->dispatcher->forward([
-            'action'=>'index'
-        ]);
+        $this->redirectIndex('El usuario fue borrado');
     }
 
-    public function passwordAction($id){
-        $usuario = Usuarios::findFirstById($id);
-        if(!$usuario){
-            $this->flash->error('No se encontro el usuario');
-            return $this->dispatcher->forward([
-                'controller'=>'usuarios',
-                'action'=>'index'
-            ]);
-        }
+    public function passwordAction($id)
+    {
+        $usuario = $this->findUserByIdOrRedirect($id);
         $form = new ChangePasswordForm();
         if($this->request->isPost()){
             if($form->isValid($this->request->getPost())){
                 $usuario->password=$this->security->hash($this->request->getPost('password'));
                 if(!$usuario->save()){
-                    $this->flash->error($user-getMessages());
+                    $this->flash->error($usuario->getMessages());
                 }else{
-                    $this->flash->success('El password ha sido cambiado');
-                    return $this->dispatcher->forward([
-                        'controller'=>'usuarios',
-                        'action'=>'index'
-                    ]);
+                    $this->redirectIndex('El password ha sido cambiado');
                 }
             }
         }
         $this->view->usuario = $usuario;
-        $this->view->back='usuarios/index';
+        $this->view->back = 'usuarios/index';
         $this->view->form = $form;
-        $this->view->tags = new Tags;
+    }
+
+    private function findUserByIdOrRedirect($id)
+    {
+        $usuario = Usuarios::findFirstById($id);
+        if(!$usuario){
+            $this->redirectIndex('No se encontró el usuario','error');
+        }
+
+        return $usuario;
+    }
+
+    private function redirectIndex($message,$alertType='success')
+    {
+        $this->flashSession->$alertType($message);
+        $this->response->redirect('usuarios/index');
+        $this->response->send();
+        exit;
     }
 }
 
