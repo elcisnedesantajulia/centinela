@@ -16,7 +16,7 @@ class PerfilesController extends ControllerBase
         $paginator = new Paginator([
             'data'      =>$perfiles,
             'limit'     =>20,
-            'page'      =>$page,
+            'page'      =>1,
             'adjacents' =>5,
         ]);
         $this->view->paginator = $paginator->getPaginate();
