@@ -5,6 +5,7 @@ use Phalcon\Mvc\Model\Behavior\SoftDelete;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 
 class Usuarios extends Model
 {
@@ -42,11 +43,15 @@ class Usuarios extends Model
         ]));
     }
 
-    // Valida que los emails sean unicos por usuario
     public function validation(){
         $validator = new Validation();
+        // Valida que los emails sean unicos por usuario
         $validator->add('email',new Uniqueness([
             'message' => 'El email ya fue registrado',
+        ]));
+        // Valida que los nombres no esten vacios despues de aplicar el trim
+        $validator->add('nombre',new PresenceOf([
+            'message' => 'El nombre no puede estar vacío',
         ]));
         return $this->validate($validator);
     }

@@ -2,6 +2,9 @@
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 
 class Perfiles extends Model
 {
@@ -36,5 +39,19 @@ class Perfiles extends Model
             ],
         ]));
     }
+
+    public function validation(){
+        $validator = new Validation();
+        // Valida que los emails sean unicos por usuario
+        $validator->add('nombre',new Uniqueness([
+            'message' => 'El nombre del perfil ya fue registrado',
+        ]));
+        // Valida que los nombres no esten vacios despues de aplicar el trim
+        $validator->add('caption',new PresenceOf([
+            'message' => 'El caption no puede estar vacío',
+        ]));
+        return $this->validate($validator);
+    }
+
 }
 

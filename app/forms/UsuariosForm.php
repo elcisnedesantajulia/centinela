@@ -6,7 +6,8 @@ use Centinela\Bootstrap4Form as Form;
 
 class UsuariosForm extends Form
 {
-    public function initialize($entity=null,$options=null){
+    public function initialize($entity=null,$options=null)
+    {
 
         // Factory instancia elementos reusables en varios formularios
         $factory = new Factory();

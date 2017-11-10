@@ -10,20 +10,24 @@ use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\StringLength;
 use Phalcon\Validation\Validator\Confirmation;
 use Phalcon\Validation\Validator\Identical;
+use Phalcon\Validation\Validator\Regex;
 use Phalcon\Validation\Validator\Email as EmailValidator;
 use Centinela\Models\Perfiles;
 
 class FormElementsFactory
 {
-    public function nombre(){
+    public function nombre()
+    {
         return $this->textRequired('nombre','Nombre','El nombre es requerido');
     }
 
-    public function email(){
+    public function email()
+    {
         return $this->emailValido('email','Email','Introduce un email válido');
     }
 
-    public function userId(){
+    public function userId()
+    {
         $id = new Text('id',[
             'placeholder'=>'ID de usuario',
         ]);
@@ -32,7 +36,8 @@ class FormElementsFactory
         return $id;
     }
 
-    public function password(){
+    public function password()
+    {
         $message = 'El password debe tener al menos 8 caracteres';
         $password = new Password('password',[
             'placeholder'=>'Password',
@@ -48,7 +53,8 @@ class FormElementsFactory
         return $password;
     }
 
-    public function confirmar(){
+    public function confirmar()
+    {
         $confirmar = new Password('confirmar',[
             'placeholder'=>'Confirmar password',
         ]);
@@ -61,7 +67,8 @@ class FormElementsFactory
         return $confirmar;
     }
 
-    public function perfiles(){
+    public function perfiles()
+    {
         // TODO implementar reglas segun los privilegios de usuario
         $perfiles = Perfiles::find([
             'activo = :activo:',
@@ -76,9 +83,10 @@ class FormElementsFactory
         return $selectPerfiles;
     }
 
-    public function bloqueado(){
+    public function bloqueado()
+    {
         $bloqueado=new Check('bloqueado',[
-            'value' => 1,
+            'value' => 1, //Si esta seleccionado su valor es 1, si no es null
         ]);
         $bloqueado->setLabel('Usuario bloqueado');
         $bloqueado->setUserOption('decorator','renderCheck');
@@ -86,7 +94,19 @@ class FormElementsFactory
         return $bloqueado;
     }
 
-    public function csrf($value){
+    public function activo()
+    {
+        $activo=new Check('activo',[
+            'value' => 1, //Si esta seleccionado su valor es 1, si no es null
+        ]);
+        $activo->setLabel('Usuario activo');
+        $activo->setUserOption('decorator','renderCheck');
+
+        return $activo;
+    }
+
+    public function csrf($value)
+    {
         $csrf = new Hidden('csrf');
         $csrf->addValidator(new Identical([
             'value' => $value,
@@ -97,7 +117,31 @@ class FormElementsFactory
         return $csrf;
     }
 
-    public function textRequired($name,$caption,$message){
+    public function perfilesNombre()
+    {
+        $nombre = new Text('nombre',[
+            'placeholder'   =>'Nombre',
+            'required'      =>true
+        ]);
+        $message = 'El nombre del perfil debe estar formado por letras '.
+            'minúsculas sin espacios ni caracteres acentuados.';
+        $nombre->setUserOption('decorator','renderText');
+        $nombre->addValidator(new Regex([
+            'pattern'=>'#^[a-z][a-z0-9]{0,31}$#',
+            'message'=>$message,
+        ]));
+        $nombre->setUserOption('clientSide',$message);
+
+        return $nombre;
+    }
+
+    public function caption()
+    {
+        return $this->textRequired('caption','Caption','El caption es requerido');
+    }
+
+    public function textRequired($name,$caption,$message)
+    {
         $element = new Text($name);
         $element->setUserOption('decorator','renderText');
         $this->configRequired($element,$caption,$message);
@@ -114,26 +158,30 @@ class FormElementsFactory
         return $element;
     }
 
-    private function configRequired($element,$caption,$message){
+    private function configRequired($element,$caption,$message)
+    {
         $this->configDefault($element,$caption,$message);
         $element->addValidator(new PresenceOf([
             'message'=>$message
         ]));
     }
 
-    private function configEmail($element,$caption,$message){
+    private function configEmail($element,$caption,$message)
+    {
         $this->configDefault($element,$caption,$message);
         $element->addValidator(new EmailValidator([
             'message'=>$message
         ]));
     }
 
-    private function configDefault($element,$caption,$message){
+    private function configDefault($element,$caption,$message)
+    {
         $element->setAttributes([
             'placeholder'=>$caption,
             'required'=>true,
         ]);
         $element->setUserOption('clientSide',$message);
+        $element->setFilters(['trim']);
     }
 }
 

@@ -1,7 +1,7 @@
 <?php
 namespace Centinela\Controllers;
 
-use Phalcon\Mvc\Model\Criteria;
+//use Phalcon\Mvc\Model\Criteria;
 use Centinela\Forms\UsuariosForm;
 use Centinela\Forms\ChangePasswordForm;
 use Centinela\Models\Usuarios;
@@ -35,9 +35,9 @@ class UsuariosController extends ControllerBase
         $form = new UsuariosForm();
         if($this->request->isPost()){
             if($form->isValid($this->request->getPost())){
-                $id_perfil=$this->request->getPost('id_perfil','int');
                 $usuario = new Usuarios([
-                    'nombre'    =>$this->request->getPost('nombre','striptags'),
+                    'nombre'    =>$this->request->getPost('nombre',
+                        ['trim','striptags']),
                     'email'     =>$this->request->getPost('email','email'),
                     'password'  =>$this->security->hash(
                         $this->request->getPost('password')),
@@ -64,8 +64,9 @@ class UsuariosController extends ControllerBase
         ]);
         if($this->request->isPost()){
             $usuario->assign([
-                'nombre'    =>$this->request->getPost('nombre','striptags'),
-                'email'     =>$this->request->getPost('email','email'),
+                'nombre'    =>$this->request->getPost('nombre',
+                    ['trim','striptags']),
+                'email'     =>$this->request->getPost('email',['email','lower']),
                 'perfilId'  =>$this->request->getPost('perfilId','int'),
                 'bloqueado' =>($this->request->getPost('bloqueado'))? 1 : 0 ,
             ]);

@@ -1,4 +1,4 @@
-<!-- @start usuarios/index >
+<!-- @start perfiles/index >
 <                        -->
 {{ content() }}
 
@@ -37,5 +37,5 @@
 No hay resultados
 {% endfor                           %}
 <!--                    >
-< @end usuarios/index -->
+< @end perfiles/index -->
 
