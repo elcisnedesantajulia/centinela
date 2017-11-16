@@ -9,6 +9,12 @@ use Centinela\PaginatorModel as Paginator;
 
 class UsuariosController extends ControllerBase
 {
+    public function initialize()
+    {
+        $this->index='usuarios/index';
+        $this->view->index = $this->index;
+    }
+
     public function indexAction(){
         $this->view->form = new UsuariosForm();
         // Si no existe $_GET['page'] la pagina es 1
@@ -52,7 +58,6 @@ class UsuariosController extends ControllerBase
                 }
             }
         }
-        $this->view->back = 'usuarios/index';
         $this->view->form = $form;
     }
 
@@ -81,7 +86,6 @@ class UsuariosController extends ControllerBase
             }
         }
         $this->view->usuario = $usuario;
-        $this->view->back = 'usuarios/index';
         $this->view->form = $form;
     }
 
@@ -109,7 +113,6 @@ class UsuariosController extends ControllerBase
             }
         }
         $this->view->usuario = $usuario;
-        $this->view->back = 'usuarios/index';
         $this->view->form = $form;
     }
 
@@ -121,14 +124,6 @@ class UsuariosController extends ControllerBase
         }
 
         return $usuario;
-    }
-
-    private function redirectIndex($message,$alertType='success')
-    {
-        $this->flashSession->$alertType($message);
-        $this->response->redirect('usuarios/index');
-        $this->response->send();
-        exit;
     }
 }
 

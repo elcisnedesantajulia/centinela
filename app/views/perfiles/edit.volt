@@ -1,9 +1,8 @@
-<!-- @start perfilesEdit >
-<                      -->
+<!-- @start perfilesEdit -->
 {{ content() }}
 
 <div class="text-right py-3">
-  {{ tags.btnRegresar(back) }}
+  {{ tags.btnRegresar(index) }}
 </div>
 
 <div class="row">
@@ -26,6 +25,5 @@
   </div>
 </div>
 {{ partial('partials/jsFormValidation',['id':'perfil']) }}
-<!--                  >
-< @end perfilesEdit -->
+<!-- @end perfilesEdit -->
 

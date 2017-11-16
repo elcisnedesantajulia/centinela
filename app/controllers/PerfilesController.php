@@ -6,6 +6,12 @@ use Centinela\PaginatorModel as Paginator;
 
 class PerfilesController extends ControllerBase
 {
+    public function initialize()
+    {
+        $this->index='perfiles/index';
+        $this->view->index = $this->index;
+    }
+
     public function indexAction()
     {
         $params = [];
@@ -44,7 +50,6 @@ class PerfilesController extends ControllerBase
             }
         }
 
-        $this->view->back = 'perfiles/index';
         $this->view->form = $form;
     }
 
@@ -70,7 +75,6 @@ class PerfilesController extends ControllerBase
         }
 
         $this->view->perfil = $perfil;
-        $this->view->back = 'perfiles/index';
         $this->view->form = $form;
     }
 
@@ -82,14 +86,6 @@ class PerfilesController extends ControllerBase
         }
 
         return $perfil;
-    }
-
-    private function redirectIndex($message,$alertType='success')
-    {
-        $this->flashSession->$alertType($message);
-        $this->response->redirect('perfiles/index');
-        $this->response->send();
-        exit;
     }
 }
 

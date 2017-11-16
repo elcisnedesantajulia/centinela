@@ -5,6 +5,8 @@ use Phalcon\Mvc\Dispatcher;
 
 class ControllerBase extends Controller
 {
+    protected $index = 'index/index';
+
     public function beforeExecuteRoute(Dispatcher $dispatcher){
         $this->displayRedirectMessages();
         $this->view->setVar('debug','fuera');
@@ -21,10 +23,11 @@ class ControllerBase extends Controller
             $this->view->setVar('is_auth',true);
             $this->view->setVar('debug','dentro');
             $this->view->menu=[
-                'Accesos'=>[
+                'Privilegios'=>[
                     'Perfiles'      =>'perfiles/index',
                     'Usuarios'      =>'usuarios/index',
                     'Controladores' =>'controladores/index',
+                    'Acciones'      =>'acciones/index',
                 ],
             ];
         }
@@ -42,5 +45,13 @@ class ControllerBase extends Controller
                 }
             }
         }
+    }
+
+    protected function redirectIndex($message,$alertType='success')
+    {
+        $this->flashSession->$alertType($message);
+        $this->response->redirect($this->index);
+        $this->response->send();
+        exit;
     }
 }

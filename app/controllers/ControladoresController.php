@@ -6,6 +6,12 @@ use Centinela\PaginatorModel as Paginator;
 
 class ControladoresController extends ControllerBase
 {
+    public function initialize()
+    {
+        $this->index='controladores/index';
+        $this->view->index = $this->index;
+    }
+
     public function indexAction()
     {
         $params = [];
@@ -41,17 +47,50 @@ class ControladoresController extends ControllerBase
             }
         }
 
-        $this->view->back = 'controladores/index';
         $this->view->form = $form;
     }
 
-    private function redirectIndex($message,$alertType='success')
+    public function editAction($id)
     {
-        // TODO pasar a ControllersBase y guardar en una propiedad 'controladores/index'
-        $this->flashSession->$alertType($message);
-        $this->response->redirect('controladores/index');
-        $this->response->send();
-        exit;
+        $controlador = $this->findControladorByIdOrRedirect($id);
+        $form = new ControladoresForm($controlador);
+
+        if($this->request->isPost()){
+            $controlador->assign([
+                'controlador'=>$this->request->getPost('controlador',
+                        ['trim','striptags','lower']),
+            ]);
+            $form = new ControladoresForm($controlador);
+            if($form->isValid($this->request->getPost())){
+                if(!$controlador->save()){
+                    $this->redirectIndex(implode("\n",$controlador->getMessages()),
+                        'error');
+                }
+                $this->redirectIndex('Se guardaron los cambios');
+            }
+        }
+
+        $this->view->controlador = $controlador;
+        $this->view->form = $form;
+    }
+
+    public function deleteAction($id)
+    {
+        $controlador = $this->findControladorByIdOrRedirect($id);
+        if(!$controlador->delete()){
+            $this->redirectIndex(implode("\n",$controlador->getMessages()),'error');
+        }
+        $this->redirectIndex('El controlador fue borrado');
+    }
+
+    private function findControladorByIdOrRedirect($id)
+    {
+        $controlador = Controladores::findFirstById($id);
+        if(!$controlador){
+            $this->redirectIndex('No se encontró el controlador','error');
+        }
+
+        return $controlador;
     }
 }
 

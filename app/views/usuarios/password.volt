@@ -1,9 +1,8 @@
-<!-- @start usuariosEdit >
-<                      -->
+<!-- @start usuariosPassword -->
 {{ content() }}
 
 <div class="text-right py-3">
-  {{ tags.btnRegresar(back) }}
+  {{ tags.btnRegresar(index) }}
 </div>
 
 <div class="row">
@@ -25,6 +24,5 @@
   </div>
 </div>
 {{ partial('partials/jsFormValidation',['id':'usuario']) }}
-<!--                  >
-< @end usuariosEdit -->
+<!-- @end usuariosPassword -->
 
