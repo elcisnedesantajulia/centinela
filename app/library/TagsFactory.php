@@ -31,6 +31,18 @@ class TagsFactory
 html;
     }
 
+    public function btnDeleteControlador($id,$name)
+    {
+        return <<<html
+<span data-toggle="tooltip" data-placement="top" title='Borrar controlador'>
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" 
+      data-target="#deleteControladorModal" data-controladorid="$id" data-controladorname="$name" >
+  <span class="oi oi-trash"></span>
+</button>
+</span>
+html;
+    }
+
     public function btnIcon($href,$icon,$color,$title)
     {
         return Tag::linkTo([
@@ -42,20 +54,26 @@ html;
             'role'          =>'button',
             'title'         =>$title,
             'data-toggle'   =>'tooltip',
-            'data-placement'=>'top'
+            'data-placement'=>'top',
         ]);
     }
 
     public function btnCreateUser()
     {
-        return $this->btnIconText('usuarios/create','person','success'
-            ,'Crear nuevo usuario');
+        return $this->btnIconText('usuarios/create','person','success',
+            'Crear nuevo usuario');
     }
 
     public function btnCreatePerfil()
     {
-        return $this->btnIconText('perfiles/create','people','success'
-            ,'Crear nuevo perfil');
+        return $this->btnIconText('perfiles/create','people','success',
+            'Crear nuevo perfil');
+    }
+
+    public function btnCreateControlador()
+    {
+        return $this->btnIconText('controladores/create','folder','success',
+            'Crear nuevo controlador');
     }
 
     public function btnRegresar($href)
@@ -67,7 +85,7 @@ html;
     {
         return Tag::linkTo([
             $href,
-            // Open iconic https://useiconic.com/ope
+            // Open iconic https://useiconic.com/open
             '<span class="oi oi-'.$icon.'"></span> '.$text,
             // Bootstrap 4 https://getbootstrap.com/docs/4.0/utilities/colors/
             'class' =>'btn btn-outline-'.$color,

@@ -38,8 +38,7 @@ class PerfilesController extends ControllerBase
                 ]);
                 if(!$perfil->save()){
                     $this->flash->notice($perfil->getMessages());
-                }
-                else{
+                }else{
                     $this->redirectIndex('El perfil ha sido creado!');
                 }
             }

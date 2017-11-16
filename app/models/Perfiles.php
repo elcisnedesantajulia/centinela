@@ -15,7 +15,8 @@ class Perfiles extends Model
     public $caption;
     public $activo;
 
-    public function initialize()    {
+    public function initialize()
+    {
         $this->hasMany('id',__NAMESPACE__.'\Usuarios','perfilId',[
             'alias'=>'usuarios',
             'foreignKey'=>[
@@ -40,7 +41,8 @@ class Perfiles extends Model
         ]));
     }
 
-    public function validation(){
+    public function validation()
+    {
         $validator = new Validation();
         // Valida que los emails sean unicos por usuario
         $validator->add('nombre',new Uniqueness([

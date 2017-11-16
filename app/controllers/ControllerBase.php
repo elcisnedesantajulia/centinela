@@ -22,8 +22,9 @@ class ControllerBase extends Controller
             $this->view->setVar('debug','dentro');
             $this->view->menu=[
                 'Accesos'=>[
-                    'Perfiles'=>'perfiles/index',
-                    'Usuarios'=>'usuarios/index',
+                    'Perfiles'      =>'perfiles/index',
+                    'Usuarios'      =>'usuarios/index',
+                    'Controladores' =>'controladores/index',
                 ],
             ];
         }

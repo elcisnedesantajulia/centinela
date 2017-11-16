@@ -22,5 +22,13 @@ $('#deleteUserModal').on('show.bs.modal', function (event) {
   $('#confirmar').attr("href",'{{ url("usuarios/delete/") }}'+userid)
 })
 
+$('#deleteControladorModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // El botón que lanzó el modal
+  var controladorid = button.data('controladorid') 
+  var controladorname = button.data('controladorname')
+  $('#caption').text('Borrar controlador ' + controladorname)
+  $('#confirmar').attr("href",'{{ url("controladores/delete/") }}'+controladorid)
+})
+
 </script>
 

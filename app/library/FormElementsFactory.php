@@ -99,7 +99,7 @@ class FormElementsFactory
         $activo=new Check('activo',[
             'value' => 1, //Si esta seleccionado su valor es 1, si no es null
         ]);
-        $activo->setLabel('Usuario activo');
+        $activo->setLabel('Perfil activo');
         $activo->setUserOption('decorator','renderCheck');
 
         return $activo;
@@ -119,11 +119,31 @@ class FormElementsFactory
 
     public function perfilesNombre()
     {
+        // TODO Fusionar controlador y perfilesNombre
         $nombre = new Text('nombre',[
             'placeholder'   =>'Nombre',
             'required'      =>true
         ]);
         $message = 'El nombre del perfil debe estar formado por letras '.
+            'minúsculas sin espacios ni caracteres acentuados.';
+        $nombre->setUserOption('decorator','renderText');
+        $nombre->addValidator(new Regex([
+            'pattern'=>'#^[a-z][a-z0-9]{0,31}$#',
+            'message'=>$message,
+        ]));
+        $nombre->setUserOption('clientSide',$message);
+
+        return $nombre;
+    }
+
+    public function controlador()
+    {
+        // TODO Fusionar controlador y perfilesNombre
+        $nombre = new Text('controlador',[
+            'placeholder'   =>'Controlador',
+            'required'      =>true
+        ]);
+        $message = 'El nombre del controlador debe estar formado por letras '.
             'minúsculas sin espacios ni caracteres acentuados.';
         $nombre->setUserOption('decorator','renderText');
         $nombre->addValidator(new Regex([
