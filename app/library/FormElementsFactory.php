@@ -119,45 +119,32 @@ class FormElementsFactory
 
     public function perfilesNombre()
     {
-        // TODO Fusionar controlador y perfilesNombre
-        $nombre = new Text('nombre',[
-            'placeholder'   =>'Nombre',
-            'required'      =>true
-        ]);
-        $message = 'El nombre del perfil debe estar formado por letras '.
-            'minúsculas sin espacios ni caracteres acentuados.';
-        $nombre->setUserOption('decorator','renderText');
-        $nombre->addValidator(new Regex([
-            'pattern'=>'#^[a-z][a-z0-9]{0,31}$#',
-            'message'=>$message,
-        ]));
-        $nombre->setUserOption('clientSide',$message);
-
-        return $nombre;
+        return $this->textIdAlfanumerico('nombre','Nombre');
     }
 
     public function controlador()
     {
-        // TODO Fusionar controlador y perfilesNombre
-        $nombre = new Text('controlador',[
-            'placeholder'   =>'Controlador',
-            'required'      =>true
-        ]);
-        $message = 'El nombre del controlador debe estar formado por letras '.
-            'minúsculas sin espacios ni caracteres acentuados.';
-        $nombre->setUserOption('decorator','renderText');
-        $nombre->addValidator(new Regex([
-            'pattern'=>'#^[a-z][a-z0-9]{0,31}$#',
-            'message'=>$message,
-        ]));
-        $nombre->setUserOption('clientSide',$message);
-
-        return $nombre;
+        return $this->textIdAlfanumerico('controlador','Controlador');
     }
 
     public function caption()
     {
         return $this->textRequired('caption','Caption','El caption es requerido');
+    }
+
+    public function textIdAlfanumerico($name,$caption)
+    {
+        $message = 'Este elemento debe estar formado por letras minúsculas sin '.
+            'espacios ni caracteres acentuados';
+        $element = new Text($name);
+        $element->setUserOption('decorator','renderText');
+        $this->configDefault($element,$caption,$message);
+        $element->addValidator(new Regex([
+            'pattern'=>'#^[a-z][a-z0-9]{0,31}$#',
+            'message'=>$message,
+        ]));
+
+        return $element;
     }
 
     public function textRequired($name,$caption,$message)

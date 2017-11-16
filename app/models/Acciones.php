@@ -5,18 +5,19 @@ use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
-class Controladores extends Model
+class Acciones extends Model
 {
     public $id;
     public $mtime;
     public $ctime;
-    public $controlador;
+    public $accion;
+    public $controladorId;
 
     public function initialize()
     {
-        $this->hasMany('id',__NAMESPACE__.'\Acciones','controladorId',[
-            'alias'=>'acciones',
-            'foreignKey'=>['No puede ser borrado porque está siendo usado en Acciones'],
+        $this->belongsTo('controladorId',__NAMESPACE__.'\Controladores','id',[
+            'alias'     =>'controlador',
+            'reusable'  =>true, // cacheado implícitamente
         ]);
 
         $this->addBehavior(new Timestampable([
@@ -35,11 +36,9 @@ class Controladores extends Model
         $validator = new Validation();
         // Valida que los emails sean unicos por usuario
         $validator->add('controlador',new Uniqueness([
-            'message' => 'El nombre debe ser único, ya existe un controlador '.
-                'con ese nombre',
+            'message' => 'El nombre del controlador ya fue registrado',
         ]));
         return $this->validate($validator);
     }
-
 }
 

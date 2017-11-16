@@ -76,6 +76,12 @@ html;
             'Crear nuevo controlador');
     }
 
+    public function btnCreateAccion()
+    {
+        return $this->btnIconText('acciones/create','puzzle-piece','success',
+            'Crear nueva accion');
+    }
+
     public function btnRegresar($href)
     {
         return $this->btnIconText($href,'action-undo','danger','Regresar');

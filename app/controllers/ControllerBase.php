@@ -23,7 +23,7 @@ class ControllerBase extends Controller
             $this->view->setVar('is_auth',true);
             $this->view->setVar('debug','dentro');
             $this->view->menu=[
-                'Privilegios'=>[
+                'Administración'=>[
                     'Perfiles'      =>'perfiles/index',
                     'Usuarios'      =>'usuarios/index',
                     'Controladores' =>'controladores/index',
