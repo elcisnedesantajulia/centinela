@@ -34,7 +34,7 @@ $('#deleteAccionModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget)
   var id = button.data('id') 
   var name = button.data('name')
-  $('#caption').text('Borrar accion ' + name)
+  $('#caption').text('Borrar acción ' + name)
   $('#confirmar').attr("href",'{{ url("acciones/delete/") }}'+id)
 })
 

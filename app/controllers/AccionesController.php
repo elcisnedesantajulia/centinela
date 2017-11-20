@@ -75,6 +75,15 @@ class AccionesController extends ControllerBase
         $this->view->form = $form;
     }
 
+    public function deleteAction($id)
+    {
+        $accion = $this->findAccionByIdOrRedirect($id);
+        if(!$accion->delete()){
+            $this->redirectIndex(implode("\n",$accion->getMessages()),'error');
+        }
+        $this->redirectIndex('La acción fue borrada');
+    }
+
     private function findAccionByIdOrRedirect($id)
     {
         $accion = Acciones::findFirstById($id);
