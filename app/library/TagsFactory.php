@@ -13,30 +13,38 @@ class TagsFactory
     {
         return $this->btnIcon($href,'key','warning',$title);
     }
-
+/*
     public function btnDelete($href,$title)
     {
         return $this->btnIcon($href,'trash','danger',$title);
     }
-
+*/
     public function btnDeleteUser($id,$name)
     {
+        return $this->btnModalDelete($id,$name,'Borrar usuario','#deleteUserModal');
         return <<<html
-<span data-toggle="tooltip" data-placement="top" title='Borrar usuario'>
-<button type="button" class="btn btn-outline-danger" data-toggle="modal" 
-      data-target="#deleteUserModal" data-userid="$id" data-username="$name" >    
-  <span class="oi oi-trash"></span>
-</button>
 </span>
 html;
     }
 
     public function btnDeleteControlador($id,$name)
     {
+        return $this->btnModalDelete($id,$name,'Borrar controlador',
+            '#deleteControladorModal');
+    }
+
+    public function btnDeleteAccion($id,$name)
+    {   
+        return $this->btnModalDelete($id,$name,'Borrar acción',
+            '#deleteAccionModal');
+    }
+
+    public function btnModalDelete($id,$name,$title,$target)
+    {
         return <<<html
-<span data-toggle="tooltip" data-placement="top" title='Borrar controlador'>
+<span data-toggle="tooltip" data-placement="top" title="$title">
 <button type="button" class="btn btn-outline-danger" data-toggle="modal" 
-      data-target="#deleteControladorModal" data-controladorid="$id" data-controladorname="$name" >
+      data-target="$target" data-id="$id" data-name="$name" >
   <span class="oi oi-trash"></span>
 </button>
 </span>
@@ -79,7 +87,7 @@ html;
     public function btnCreateAccion()
     {
         return $this->btnIconText('acciones/create','puzzle-piece','success',
-            'Crear nueva accion');
+            'Crear nueva acción');
     }
 
     public function btnRegresar($href)

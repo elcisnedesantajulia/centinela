@@ -52,8 +52,7 @@ class UsuariosController extends ControllerBase
                 ]);
                 if(!$usuario->save()){
                     $this->flash->notice($usuario->getMessages());
-                }
-                else{
+                }else{
                     $this->redirectIndex('El usuario ha sido creado!');
                 }
             }

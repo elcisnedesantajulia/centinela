@@ -35,9 +35,11 @@ class Acciones extends Model
     public function validation(){
         $validator = new Validation();
         // Valida que los emails sean unicos por usuario
-        $validator->add('controlador',new Uniqueness([
-            'message' => 'El nombre del controlador ya fue registrado',
+        $validator->add(['accion','controladorId'],new Uniqueness([
+            'message' => 'El nombre de la accion ya fue registrado en ese controlador',
         ]));
+        // TODO add Validation InclusionIn para validar que el controladorId sí
+        //      exista 
         return $this->validate($validator);
     }
 }

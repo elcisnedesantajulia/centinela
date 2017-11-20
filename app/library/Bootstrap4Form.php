@@ -84,9 +84,12 @@ html;
     public function renderSelect($name){
         $element=$this->get($name);
         $element->setAttribute('class','form-control');
+        $label = $element->getLabel();
+        $html_label = empty($label) ? '': '<label for="$name">'.$label.'</label>' ;
         $render = $element->render();
         return <<<html
 <div class="form-group">
+  $html_label
   $render
 </div>
 html;

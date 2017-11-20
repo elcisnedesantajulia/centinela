@@ -31,7 +31,58 @@ class AccionesController extends ControllerBase
 
     public function createAction()
     {
-        
+        $form = new AccionesForm;
+        if($this->request->isPost()){
+            if($form->isValid($this->request->getPost())){
+                $accion = new Acciones([
+                    'accion'        =>$this->request->getPost('accion',
+                        ['trim','striptags']),
+                    'controladorId' =>$this->request->getPost('controladorId','int'),
+                ]);
+                if(!$accion->save()){
+                    $this->flash->notice($accion->getMessages());
+                }else{
+                    $this->redirectIndex('La acción ha sido creada!');
+                }
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
+    public function editAction($id)
+    {
+        $accion = $this->findAccionByIdOrRedirect($id);
+        $form = new AccionesForm($accion);
+
+        if($this->request->isPost()){
+            $accion->assign([
+                'accion'        =>$this->request->getPost('accion',
+                    ['trim','striptags']),
+                'controladorId' =>$this->request->getPost('controladorId','int'),
+            ]);
+            $form = new AccionesForm($accion);
+            if($form->isValid($this->request->getPost())){
+                if(!$accion->save()){
+                    $this->redirectIndex(implode("\n",$accion->getMessages()),
+                        'error');
+                }
+                $this->redirectIndex('Se guardaron los cambios');
+            }
+        }
+
+        $this->view->accion = $accion;
+        $this->view->form = $form;
+    }
+
+    private function findAccionByIdOrRedirect($id)
+    {
+        $accion = Acciones::findFirstById($id);
+        if(!$accion){
+            $this->redirectIndex('No se encontró la acción','error');
+        }
+
+        return $accion;
     }
 }
 

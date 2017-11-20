@@ -13,6 +13,7 @@ use Phalcon\Validation\Validator\Identical;
 use Phalcon\Validation\Validator\Regex;
 use Phalcon\Validation\Validator\Email as EmailValidator;
 use Centinela\Models\Perfiles;
+use Centinela\Models\Controladores;
 
 class FormElementsFactory
 {
@@ -83,6 +84,19 @@ class FormElementsFactory
         return $selectPerfiles;
     }
 
+    public function controladores()
+    {
+        $controladores = Controladores::find();
+        $selectControladores = new Select('controladorId',$controladores,[
+            'using' => ['id','controlador'],
+        ]);
+        $selectControladores->setLabel('Elige controlador:');
+        $selectControladores->setDefault(1);
+        $selectControladores->setUserOption('decorator','renderSelect');
+
+        return $selectControladores;
+    }
+
     public function bloqueado()
     {
         $bloqueado=new Check('bloqueado',[
@@ -125,6 +139,11 @@ class FormElementsFactory
     public function controlador()
     {
         return $this->textIdAlfanumerico('controlador','Controlador');
+    }
+
+    public function accion()
+    {
+        return $this->textIdAlfanumerico('accion','Acción');
     }
 
     public function caption()

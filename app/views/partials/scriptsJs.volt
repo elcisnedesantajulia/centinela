@@ -9,25 +9,33 @@ crossorigin="anonymous"></script>
     integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" 
     crossorigin="anonymous"></script>
 <script>
-// Mabilitar tooltips
+// Habilitar tooltips
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 // Modals
 $('#deleteUserModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // El botón que lanzó el modal
-  var userid = button.data('userid') 
-  var username = button.data('username')
-  $('#caption').text('Borrar usuario ' + username)
-  $('#confirmar').attr("href",'{{ url("usuarios/delete/") }}'+userid)
+  var button = $(event.relatedTarget)
+  var id = button.data('id') 
+  var name = button.data('name')
+  $('#caption').text('Borrar usuario ' + name)
+  $('#confirmar').attr("href",'{{ url("usuarios/delete/") }}'+id)
 })
 
 $('#deleteControladorModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // El botón que lanzó el modal
-  var controladorid = button.data('controladorid') 
-  var controladorname = button.data('controladorname')
-  $('#caption').text('Borrar controlador ' + controladorname)
-  $('#confirmar').attr("href",'{{ url("controladores/delete/") }}'+controladorid)
+  var button = $(event.relatedTarget)
+  var id = button.data('id') 
+  var name = button.data('name')
+  $('#caption').text('Borrar controlador ' + name)
+  $('#confirmar').attr("href",'{{ url("controladores/delete/") }}'+id)
+})
+
+$('#deleteAccionModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget)
+  var id = button.data('id') 
+  var name = button.data('name')
+  $('#caption').text('Borrar accion ' + name)
+  $('#confirmar').attr("href",'{{ url("acciones/delete/") }}'+id)
 })
 
 </script>

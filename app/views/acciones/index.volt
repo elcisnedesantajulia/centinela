@@ -28,8 +28,9 @@
             'title':accion.controlador.controlador~'/'~accion.accion) }}
       </td>
       <td>
-        {{ tags.btnEdit('controladores/edit/'~accion.id,'Editar accion') }}
-        {#{ tags.btnDeleteAccion(accion.id,accion.accion) }#}
+        {{ tags.btnEdit('acciones/edit/'~accion.id,'Editar accion') }}
+        {{ tags.btnDeleteAccion(accion.id,
+            accion.controlador.controlador~'/'~accion.accion) }}
       </td>
     </tr>
 {% if loop.last                     %}
@@ -39,6 +40,6 @@
 {% else                             %}
 No hay resultados
 {% endfor                           %}
-{{ partial('partials/deleteControladorModal') }}
+{{ partial('partials/deleteAccionModal') }}
 <!-- @end acciones/index -->
 

@@ -9,6 +9,7 @@ class AccionesForm extends Form
     {
         $factory = new Factory();
         $this->add($factory->accion());
+        $this->add($factory->controladores());
     }
 }
 
