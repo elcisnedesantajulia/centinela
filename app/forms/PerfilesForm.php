@@ -8,9 +8,18 @@ class PerfilesForm extends Form
     public function initialize($entity=null,$options=null)
     {
         $factory = new Factory();
-        $this->add($factory->perfilesNombre());
+        // Si el perfil es permanente se deshabilita el nombre y activo
+        $permanente=($entity != null && $entity->permanente)? true : false;
+
         $this->add($factory->caption());
-        $this->add($factory->activo());
+
+        if($permanente){
+            $this->add($factory->hidden('nombre'));
+            $this->add($factory->hidden('activo'));
+        }else{
+            $this->add($factory->perfilesNombre());
+            $this->add($factory->activo());
+        }
     }
 }
 

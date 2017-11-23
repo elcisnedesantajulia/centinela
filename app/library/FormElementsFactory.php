@@ -131,6 +131,11 @@ class FormElementsFactory
         return $csrf;
     }
 
+    public function hidden($name)
+    {
+        return new Hidden($name);
+    }
+
     public function perfilesNombre()
     {
         return $this->textIdAlfanumerico('nombre','Nombre');

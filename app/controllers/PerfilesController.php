@@ -56,14 +56,16 @@ class PerfilesController extends ControllerBase
     public function editAction($id)
     {
         $perfil = $this->findPerfilByIdOrRedirect($id);
+        $permanente = $perfil->permanente;
         $form = new PerfilesForm($perfil);
         if($this->request->isPost()){
             $perfil->assign([
-                'nombre'    =>$this->request->getPost('nombre',
-                    ['trim','striptags','lower']),
+                'nombre'    => $permanente ? $perfil->nombre :
+                    $this->request->getPost('nombre',['trim','striptags','lower']),
                 'caption'   =>$this->request->getPost('caption',
                     ['trim','striptags']),
-                'activo'    =>($this->request->getPost('activo'))? 1 : 0 ,
+                'activo'    => $permanente ? $perfil->activo :
+                    ($this->request->getPost('activo'))? 1 : 0 ,
             ]);
             $form = new PerfilesForm($perfil);
             if($form->isValid($this->request->getPost())){

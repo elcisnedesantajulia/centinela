@@ -6,7 +6,8 @@ use Phalcon\Forms\Form;
 class Bootstrap4Form extends Form
 {
     // @override
-    public function render($name,$attributes=null){
+    public function render($name,$attributes=null)
+    {
         $element=$this->get($name);
         $decorator = $element->getUserOption('decorator',false);
         if($decorator && method_exists($this,$decorator)){
@@ -15,7 +16,8 @@ class Bootstrap4Form extends Form
         return parent::render($name,$attributes);
     }
 
-    public function afterValidation(){
+    public function afterValidation()
+    {
         foreach($this as $element){
             if($this->hasMessagesFor($element->getName())){
                 $element->setUserOption('valid','invalid');
@@ -25,7 +27,8 @@ class Bootstrap4Form extends Form
         }
     }
 
-    public function renderText($name){
+    public function renderText($name)
+    {
         $element=$this->get($name);
         $htmlClasses=['form-control'];
         //Mensaje por defecto - client side
@@ -42,7 +45,7 @@ class Bootstrap4Form extends Form
         if($valid == 'valid'){
             $invalidMessage = '';
             $htmlClasses[]='is-valid';
-        }elseif($valid == 'invalid'){
+        }elseif($valid == 'invalid' ){
             $htmlClasses[]='is-invalid';
         }
 
@@ -56,7 +59,8 @@ class Bootstrap4Form extends Form
 html;
     }
 
-    public function renderSelectAsRadio($name){
+    public function renderSelectAsRadio($name)
+    {
         $element=$this->get($name);
 
         $opts = $element->getOptions();
@@ -81,7 +85,8 @@ html;
 html;
     }
 
-    public function renderSelect($name){
+    public function renderSelect($name)
+    {
         $element=$this->get($name);
         $element->setAttribute('class','form-control');
         $label = $element->getLabel();
@@ -95,9 +100,11 @@ html;
 html;
     }
 
-    public function renderCheck($name){
+    public function renderCheck($name)
+    {
         $element=$this->get($name);
         $element->setAttribute('class','form-check-input');
+
         $render = $element->render();
         $label = $element->getLabel();
 return <<<html

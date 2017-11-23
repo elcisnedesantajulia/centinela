@@ -13,6 +13,7 @@ class Perfiles extends Model
     public $ctime;
     public $nombre;
     public $caption;
+    public $permanente;
     public $activo;
 
     public function initialize()
