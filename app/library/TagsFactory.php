@@ -13,12 +13,13 @@ class TagsFactory
     {
         return $this->btnIcon($href,'key','warning',$title);
     }
-/*
-    public function btnDelete($href,$title)
+
+    public function btnPrivilegios($perfilId)
     {
-        return $this->btnIcon($href,'trash','danger',$title);
+        return $this->btnIcon('perfiles/privilegios/'.$perfilId,'key','info',
+            'Editar privilegios');
     }
-*/
+
     public function btnDeleteUser($id,$name)
     {
         return $this->btnModalDelete($id,$name,'Borrar usuario','#deleteUserModal');

@@ -12,6 +12,7 @@ class Acciones extends Model
     public $ctime;
     public $accion;
     public $controladorId;
+    public $caption;
 
     public function initialize()
     {
@@ -42,5 +43,11 @@ class Acciones extends Model
         //      exista 
         return $this->validate($validator);
     }
+
+    public function getPath()
+    {
+        return $this->controlador->controlador.'/'.$this->accion;
+    }
+
 }
 

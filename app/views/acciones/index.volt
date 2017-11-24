@@ -14,6 +14,7 @@
       <th>ID</th>
       <th>Controlador</th>
       <th>Acción</th>
+      <th>Descripción</th>
       <th class="col-lg-auto"></th>
     </tr>
   </thead>
@@ -23,14 +24,12 @@
       <td>{{ accion.id }}</td>
       <td>{{ accion.controlador.controlador }}</td>
       <td>
-        {{ link_to(accion.controlador.controlador~'/'~accion.accion,
-            accion.accion,
-            'title':accion.controlador.controlador~'/'~accion.accion) }}
+        {{ link_to(accion.getPath(),accion.accion,'title':accion.getPath()) }}
       </td>
+      <td>{{ accion.caption }}</td>
       <td>
         {{ tags.btnEdit('acciones/edit/'~accion.id,'Editar accion') }}
-        {{ tags.btnDeleteAccion(accion.id,
-            accion.controlador.controlador~'/'~accion.accion) }}
+        {{ tags.btnDeleteAccion(accion.id,accion.getPath()) }}
       </td>
     </tr>
 {% if loop.last                     %}

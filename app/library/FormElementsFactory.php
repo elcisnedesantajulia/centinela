@@ -119,6 +119,14 @@ class FormElementsFactory
         return $activo;
     }
 
+    public function accionCheck()
+    {
+        $check=new Check($accionNombre,[
+            'value' => $accionId,
+        ]);
+        
+    }
+
     public function csrf($value)
     {
         $csrf = new Hidden('csrf');
@@ -153,7 +161,7 @@ class FormElementsFactory
 
     public function caption()
     {
-        return $this->textRequired('caption','Caption','El caption es requerido');
+        return $this->textRequired('caption','Caption','Este campo es requerido');
     }
 
     public function textIdAlfanumerico($name,$caption)

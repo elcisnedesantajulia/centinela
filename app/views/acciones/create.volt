@@ -18,6 +18,7 @@
         <form class="container" id="accion" novalidate method="post" autocomplete="off">
           {{ form.render('accion') }}
           {{ form.render('controladorId') }}
+          {{ form.render('caption') }}
           {{ tags.submitSuccess('Crear acción') }}
         </form>
       </div>

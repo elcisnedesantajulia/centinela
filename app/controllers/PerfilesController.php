@@ -1,6 +1,7 @@
 <?php namespace Centinela\Controllers;
 
 use Centinela\Forms\PerfilesForm;
+use Centinela\Forms\PrivilegiosForm;
 use Centinela\Models\Perfiles;
 use Centinela\PaginatorModel as Paginator;
 
@@ -78,6 +79,14 @@ class PerfilesController extends ControllerBase
 
         $this->view->perfil = $perfil;
         $this->view->form = $form;
+    }
+
+    public function privilegiosAction($id)
+    {
+        $perfil = $this->findPerfilByIdOrRedirect($id);
+        $form = new PrivilegiosForm($perfil);
+
+        $this->view->perfil = $perfil;
     }
 
     private function findPerfilByIdOrRedirect($id)

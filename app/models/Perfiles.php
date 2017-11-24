@@ -55,6 +55,5 @@ class Perfiles extends Model
         ]));
         return $this->validate($validator);
     }
-
 }
 

@@ -27,6 +27,7 @@
       <td>{{ perfil.activo == 1 ? 'Sí' : 'No' }}</td> 
       <td>
         {{ tags.btnEdit('perfiles/edit/'~perfil.id,'Editar perfil') }}
+        {{ tags.btnPrivilegios(perfil.id) }}
       </td>
     </tr>
 {% if loop.last                     %}

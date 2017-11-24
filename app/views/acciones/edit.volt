@@ -17,6 +17,7 @@
         <form class="container" id="accion" novalidate method="post">
           {{ form.render('accion') }}
           {{ form.render('controladorId') }}
+          {{ form.render('caption') }}
           {{ tags.submitSuccess('Guardar cambios') }}
         </form>
       </div>

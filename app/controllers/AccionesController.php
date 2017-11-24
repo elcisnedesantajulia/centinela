@@ -38,6 +38,8 @@ class AccionesController extends ControllerBase
                     'accion'        =>$this->request->getPost('accion',
                         ['trim','striptags']),
                     'controladorId' =>$this->request->getPost('controladorId','int'),
+                    'caption'       =>$this->request->getPost('caption',
+                        ['trim','striptags']),
                 ]);
                 if(!$accion->save()){
                     $this->flash->notice($accion->getMessages());
@@ -60,6 +62,8 @@ class AccionesController extends ControllerBase
                 'accion'        =>$this->request->getPost('accion',
                     ['trim','striptags']),
                 'controladorId' =>$this->request->getPost('controladorId','int'),
+                'caption'       =>$this->request->getPost('caption',
+                    ['trim','striptags']),
             ]);
             $form = new AccionesForm($accion);
             if($form->isValid($this->request->getPost())){
