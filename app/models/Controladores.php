@@ -15,7 +15,10 @@ class Controladores extends Model
     public function initialize()
     {
         $this->hasMany('id',__NAMESPACE__.'\Acciones','controladorId',[
-            'alias'=>'acciones',
+            'alias'     =>'acciones',
+            'params'    =>[
+                'order' => 'accion ASC',
+            ],
             'foreignKey'=>['No puede ser borrado porque está siendo usado en Acciones'],
         ]);
 
@@ -41,5 +44,9 @@ class Controladores extends Model
         return $this->validate($validator);
     }
 
+    public function getCaption()
+    {
+        return ucfirst($this->controlador);
+    }
 }
 

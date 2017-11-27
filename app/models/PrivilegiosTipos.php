@@ -14,7 +14,7 @@ class PrivilegiosTipos extends Model
 
     public function initialize()
     {
-        $this->hasMany('id',__NAMESPACE__'\Privilegios','tiposId',[
+        $this->hasMany('id',__NAMESPACE__.'\Privilegios','tiposId',[
             'alias'     =>'privilegios',
             'foreignKey'=>[
                 'message'=>'No puede ser borrado porque está siendo usado en Privilegios',

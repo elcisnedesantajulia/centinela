@@ -13,7 +13,7 @@ return new \Phalcon\Config([
         'username'    => 'phalcon',
         'password'    => 'config.dev',
         'dbname'      => 'centinela',
-        'charset'     => 'latin1',
+        'charset'     => 'utf8',
     ],
     'application' => [
         'appDir'        => APP_PATH . '/',

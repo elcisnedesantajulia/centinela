@@ -121,5 +121,20 @@ $submit
 </div>
 html;
     }
+
+    public function checkPrivilegio($id,$label,$checked=false,$tabla='acciones')
+    {
+        $name = $tabla.'[]';
+        $renderChecked = $checked ? 'checked="checked"' : '';
+        return <<<html
+<div class="form-check">
+  <label class="form-check-label">
+    <input class="form-check-input" type="checkbox" name="$name" value="$id" 
+        $renderChecked />
+    $label
+  </label>
+</div>
+html;
+    }
 }
 

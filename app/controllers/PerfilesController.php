@@ -1,7 +1,7 @@
 <?php namespace Centinela\Controllers;
 
 use Centinela\Forms\PerfilesForm;
-use Centinela\Forms\PrivilegiosForm;
+use Centinela\Models\Controladores;
 use Centinela\Models\Perfiles;
 use Centinela\PaginatorModel as Paginator;
 
@@ -84,7 +84,16 @@ class PerfilesController extends ControllerBase
     public function privilegiosAction($id)
     {
         $perfil = $this->findPerfilByIdOrRedirect($id);
-        $form = new PrivilegiosForm($perfil);
+        $this->view->controladores = Controladores::find([
+            'order'     =>'controlador ASC',
+        ]);
+        foreach($perfil->privilegios as $privilegio){
+            if($privilegio->tiposId == 1){
+                $privilegiosAcciones[$privilegio->recursosId]=true;
+            }
+        }
+        $this->view->privilegiosAcciones=$privilegiosAcciones;
+
 
         $this->view->perfil = $perfil;
     }
