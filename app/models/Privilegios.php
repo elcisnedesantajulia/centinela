@@ -5,22 +5,25 @@ use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
-class Acciones extends Model
+class Privilegios extends Model
 {
     public $id;
     public $mtime;
     public $ctime;
-    public $accion;
-    public $controladorId;
-    public $caption;
+    public $perfilId;
+    public $tiposId;
+    public $recursosId;
 
     public function initialize()
     {
-        $this->belongsTo('controladorId',__NAMESPACE__.'\Controladores','id',[
-            'alias'     =>'controlador',
-            'reusable'  =>true, // cacheado implícitamente
+        $this->belongsTo('perfilId',__NAMESPACE__.'\Perfiles','id',[
+            'alias'     =>'perfil',
+            'reusable'  =>true, // cacheado implicitamente
         ]);
-
+        $this->belongsTo('tiposId',__NAMESPACE__.'\PrivilegiosTipos','id',[
+            'alias'     =>'tipo',
+            'reusable'  =>true, // cacheado implicitamente
+        ]);
         $this->addBehavior(new Timestampable([
             'beforeCreate'=>[
                 'field'=>'ctime',
@@ -37,17 +40,12 @@ class Acciones extends Model
     {
         $validator = new Validation();
         // Valida que los emails sean unicos por usuario
-        $validator->add(['accion','controladorId'],new Uniqueness([
-            'message' => 'El nombre de la accion ya fue registrado en ese controlador',
+        $validator->add(['perfilId','tiposId','controladorId'],new Uniqueness([
+            'message' => 'Este privilegio ya fue registrado previamente',
         ]));
-        // TODO add Validation InclusionIn para validar que el controladorId sí
-        //      exista 
+        // TODO add Validation InclusionIn para validar que perfilId, tiposId y 
+        //      recursosId existan 
         return $this->validate($validator);
-    }
-
-    public function getPath()
-    {
-        return $this->controlador->controlador.'/'.$this->accion;
     }
 }
 

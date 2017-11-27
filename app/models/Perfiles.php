@@ -19,15 +19,15 @@ class Perfiles extends Model
     public function initialize()
     {
         $this->hasMany('id',__NAMESPACE__.'\Usuarios','perfilId',[
-            'alias'=>'usuarios',
+            'alias'     =>'usuarios',
             'foreignKey'=>[
-                'message'=>'No puede ser borrado porque esta siendo usado en Usuarios',
+                'message'=>'No puede ser borrado porque está siendo usado en Usuarios',
             ],
         ]);
         $this->hasMany('id',__NAMESPACE__.'\Permisos','perfilId',[
-            'alias'=>'permisos',
+            'alias'     =>'permisos',
             'foreignKey'=>[
-                'message'=>'No puede ser borrado porque esta siendo usado en Permisos',
+                'message'=>'No puede ser borrado porque está siendo usado en Permisos',
             ],
         ]);
         $this->addBehavior(new Timestampable([

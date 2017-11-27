@@ -5,22 +5,21 @@ use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
-class Acciones extends Model
+class PrivilegiosTipos extends Model
 {
     public $id;
     public $mtime;
     public $ctime;
-    public $accion;
-    public $controladorId;
-    public $caption;
+    public $tabla;
 
     public function initialize()
     {
-        $this->belongsTo('controladorId',__NAMESPACE__.'\Controladores','id',[
-            'alias'     =>'controlador',
-            'reusable'  =>true, // cacheado implícitamente
+        $this->hasMany('id',__NAMESPACE__'\Privilegios','tiposId',[
+            'alias'     =>'privilegios',
+            'foreignKey'=>[
+                'message'=>'No puede ser borrado porque está siendo usado en Privilegios',
+            ],
         ]);
-
         $this->addBehavior(new Timestampable([
             'beforeCreate'=>[
                 'field'=>'ctime',
@@ -37,17 +36,10 @@ class Acciones extends Model
     {
         $validator = new Validation();
         // Valida que los emails sean unicos por usuario
-        $validator->add(['accion','controladorId'],new Uniqueness([
-            'message' => 'El nombre de la accion ya fue registrado en ese controlador',
+        $validator->add('table',new Uniqueness([
+            'message' => 'El nombre de la tabla ya fue registrado',
         ]));
-        // TODO add Validation InclusionIn para validar que el controladorId sí
-        //      exista 
         return $this->validate($validator);
-    }
-
-    public function getPath()
-    {
-        return $this->controlador->controlador.'/'.$this->accion;
     }
 }
 

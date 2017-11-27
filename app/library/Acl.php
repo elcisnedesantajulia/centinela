@@ -12,11 +12,11 @@ class Acl extends Component
     private $acl;
     private $filePath;
     
-    
     public function rebuild()
     {
         $acl = new AclMemory();
         $acl->setDefaultAction(\Phalcon\Acl::DENY);
+
         // Registra los roles
         $perfiles = Perfiles::find([
             'activo = :activo:',
@@ -32,13 +32,9 @@ class Acl extends Component
         $acciones = Acciones::find();
         foreach($acciones as $accion)
         {
-            $acl->addResource(new AclResource($accion->id),'use')
+            $acl->addResource(new AclResource($accion->getPath()),'use')
         }
 
-        foreach($this->privateResources as $resource => $actions)
-        {
-            $acl->addResource(new AclResource($resource),$actions);
-        }
         // Autoriza acceso a los usuarios de acuerdo a su perfil (role)
         foreach($perfiles as $perfil)
         {
@@ -78,6 +74,7 @@ class Acl extends Component
     }
 
 //--------------
+/*
     public function isPrivate($controllerName)
     {
         $controllerName=strtolower($controllerName);
@@ -143,4 +140,5 @@ class Acl extends Component
         }
         return $this->filePath;
     }
-
+*/
+}
