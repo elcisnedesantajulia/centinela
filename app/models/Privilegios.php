@@ -40,7 +40,7 @@ class Privilegios extends Model
     {
         $validator = new Validation();
         // Valida que los emails sean unicos por usuario
-        $validator->add(['perfilId','tiposId','controladorId'],new Uniqueness([
+        $validator->add(['perfilId','tiposId','recursosId'],new Uniqueness([
             'message' => 'Este privilegio ya fue registrado previamente',
         ]));
         // TODO add Validation InclusionIn para validar que perfilId, tiposId y 

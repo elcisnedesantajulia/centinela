@@ -14,7 +14,7 @@ class ControladoresController extends ControllerBase
 
     public function indexAction()
     {
-        $params = [];
+        $params = ['order'     =>'prioridad ASC'];
         $controladores = Controladores::find($params);
         if(count($controladores) == 0){
             $this->flash->notice('No hay resultados');

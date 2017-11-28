@@ -19,10 +19,10 @@
 {% endif                            %}
     <tr>
       <td>{{ controlador.id }}</td>
-      <td>{{ controlador.controlador }}</td>
+      <td>{{ controlador.getCaption() }}</td>
       <td>
         {{ tags.btnEdit('controladores/edit/'~controlador.id,'Editar controlador') }}
-        {{ tags.btnDeleteControlador(controlador.id,controlador.controlador) }}
+        {{ tags.btnDeleteControlador(controlador.id,controlador.getCaption()) }}
       </td>
     </tr>
 {% if loop.last                     %}

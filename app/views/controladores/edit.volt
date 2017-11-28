@@ -11,7 +11,7 @@
   <div class="col-lg-6">
     <div class="card bg-light">
       <div class="card-header">
-        Editar controlador {{ controlador.controlador }}
+        Editar controlador {{ controlador.getCaption() }}
       </div>
       <div class="card-body">
         <form class="container" id="controlador" novalidate method="post">
