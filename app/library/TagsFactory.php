@@ -136,5 +136,33 @@ html;
 </div>
 html;
     }
+
+    public function boolIcon($estado=1)
+    {
+        if($estado){
+            $color = 'success';
+            $icono = 'check';
+        }else{
+            $color = 'danger';
+            $icono = 'x';
+        }
+        return <<<html
+<span class="oi oi-$icono text-$color"></span>
+html;
+    }
+
+    public function boolLock($estado=1)
+    {
+        if($estado){
+            $color = 'success';
+            $icono = 'lock-locked';
+        }else{
+            $color = 'danger';
+            $icono = 'lock-unlocked';
+        }
+        return <<<html
+<span class="oi oi-$icono text-$color"></span>
+html;
+    }
 }
 

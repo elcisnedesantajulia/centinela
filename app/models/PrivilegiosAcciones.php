@@ -1,18 +1,17 @@
 <?php namespace Centinela\Models;
-/*
+
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
-class Privilegios extends Model
+class PrivilegiosAcciones extends Model
 {
     public $id;
     public $mtime;
     public $ctime;
     public $perfilId;
-    public $tiposId;
-    public $recursosId;
+    public $accionId;
 
     public function initialize()
     {
@@ -20,8 +19,8 @@ class Privilegios extends Model
             'alias'     =>'perfil',
             'reusable'  =>true, // cacheado implicitamente
         ]);
-        $this->belongsTo('tiposId',__NAMESPACE__.'\PrivilegiosTipos','id',[
-            'alias'     =>'tipo',
+        $this->belongsTo('accionId',__NAMESPACE__.'\Acciones','id',[
+            'alias'     =>'accion',
             'reusable'  =>true, // cacheado implicitamente
         ]);
         $this->addBehavior(new Timestampable([
@@ -40,11 +39,11 @@ class Privilegios extends Model
     {
         $validator = new Validation();
         // Valida que los emails sean unicos por usuario
-        $validator->add(['perfilId','tiposId','recursosId'],new Uniqueness([
+        $validator->add(['perfilId','accionId'],new Uniqueness([
             'message' => 'Este privilegio ya fue registrado previamente',
         ]));
-        // TODO add Validation InclusionIn para validar que perfilId, tiposId y 
-        //      recursosId existan 
+        // TODO add Validation InclusionIn para validar que perfilId y accionId  
+        //      existan 
         return $this->validate($validator);
     }
 }

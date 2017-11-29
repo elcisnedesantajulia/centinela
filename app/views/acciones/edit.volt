@@ -18,6 +18,7 @@
           {{ form.render('accion') }}
           {{ form.render('controladorId') }}
           {{ form.render('caption') }}
+          {{ form.render('publica') }}
           {{ tags.submitSuccess('Guardar cambios') }}
         </form>
       </div>

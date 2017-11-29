@@ -9,6 +9,7 @@ use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
 use Centinela\Auth;
+use Centinela\Acl;
 use Centinela\TagsFactory;
 
 /**
@@ -158,5 +159,10 @@ $di->set('auth',function() {
 // Tags Factory
 $di->set('tags',function() {
     return new TagsFactory();
+});
+
+// ACL Lista de Control de Acceso
+$di->set('acl',function(){
+    return new Acl();
 });
 

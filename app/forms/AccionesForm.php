@@ -11,6 +11,7 @@ class AccionesForm extends Form
         $this->add($factory->accion());
         $this->add($factory->controladores());
         $this->add($factory->caption());
+        $this->add($factory->publica());
     }
 }
 

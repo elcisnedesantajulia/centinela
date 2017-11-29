@@ -11,6 +11,9 @@
   </div>
   <div class="col-lg-6">
     <div class="card bg-light">
+      <div class="card-header">
+        Editar privilegios de {{ perfil.caption }}
+      </div>
       <div class="card-body">
 
 {%for controlador in controladores        %}
@@ -30,8 +33,13 @@
     <tr>
       <td>
 {%      endif                               %}
-{%      set checked = (privilegiosAcciones[accion.id] is defined) ? true : false %}
-        {{ tags.checkPrivilegio(accion.id,accion.caption,checked) }}
+{%      if accion.publica                   %}
+          <span class="oi oi-circle-check text-success"></span>
+          {{ accion.caption }}<br />
+{%      else                                %}
+{%        set checked = (privilegiosAcciones[accion.id] is defined) ? true : false %}
+{{        tags.checkPrivilegio(accion.id,accion.caption,checked) }}
+{%      endif%}
 {%      if loop.last                        %}
       </td>
     </tr>

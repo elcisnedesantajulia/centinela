@@ -12,14 +12,10 @@ class ControllerBase extends Controller
         $this->view->setVar('debug','fuera');
         $this->view->setVar('is_auth',false);
         $this->view->menu=[
-/*            'Reportes'=>['hijos'=>[
-                ['Resumen'  ,'reportes/resumen'     ],
-                ['Ganadores','reportes/ganadores'   ],
-            ]],
-*/            'Registro'=>'sesion/registro',
+            'Registro'=>'sesion/registro',
         ];
         $identidad = $this->auth->getIdentidad();
-        if(is_array($identidad)){
+        if( $identidad['perfil'] != 'visita' ){
             $this->view->setVar('is_auth',true);
             $this->view->setVar('debug','dentro');
             $this->view->menu=[
@@ -31,11 +27,24 @@ class ControllerBase extends Controller
                 ],
             ];
         }
+        $controlador = $dispatcher->getControllerName();
+        $accion = $dispatcher->getActionName();
 
-//var_dump($identidad); exit;
+        $recurso=$controlador.'/'.$accion;
+        if (!$this->acl->isAllowed($identidad['perfil'],$recurso,'use')){
+            if( $identidad['perfil'] != 'visita' ){
+                $this->flash->error('Error inesperado, notifícalo al administrador');
+            }
+            $dispatcher->forward([
+                'controller' => 'error',
+                'action' => 'show404'
+            ]);
+        }
+//print_r($controlador.'/'.$accion); exit;
     }
 
-    private function displayRedirectMessages(){
+    private function displayRedirectMessages()
+    {
         // Si hay mensajes guardados en la sesion los recupera y muestra
         if($this->flashSession->has()){
             $arr_mensajes=$this->flashSession->getMessages();

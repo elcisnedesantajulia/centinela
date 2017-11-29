@@ -15,6 +15,7 @@
       <th>Controlador</th>
       <th>Acción</th>
       <th>Descripción</th>
+      <th>Pública</th>
       <th class="col-lg-auto"></th>
     </tr>
   </thead>
@@ -27,6 +28,7 @@
         {{ link_to(accion.getPath(),accion.accion,'title':accion.getPath()) }}
       </td>
       <td>{{ accion.caption }}</td>
+      <td>{{ tags.boolLock(!accion.publica) }}</td>
       <td>
         {{ tags.btnEdit('acciones/edit/'~accion.id,'Editar accion') }}
         {{ tags.btnDeleteAccion(accion.id,accion.getPath()) }}

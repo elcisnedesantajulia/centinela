@@ -6,6 +6,7 @@ use Phalcon\Forms\Element\Check;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Hidden;
 use Phalcon\Forms\Element\Password;
+use Phalcon\Mvc\User\Component;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\StringLength;
 use Phalcon\Validation\Validator\Confirmation;
@@ -15,7 +16,7 @@ use Phalcon\Validation\Validator\Email as EmailValidator;
 use Centinela\Models\Perfiles;
 use Centinela\Models\Controladores;
 
-class FormElementsFactory
+class FormElementsFactory extends Component
 {
     public function nombre()
     {
@@ -71,10 +72,13 @@ class FormElementsFactory
     public function perfiles()
     {
         // TODO implementar reglas segun los privilegios de usuario
-        $perfiles = Perfiles::find([
-            'activo = :activo:',
-            'bind' => ['activo' => 1]
-        ]);
+        $condiciones[]='activo = 1';
+        $identidad = $this->auth->getIdentidad();
+        if( $identidad['perfil'] != 'super' ){
+            $condiciones[0].=" AND nombre != 'super'";
+        }
+//var_dump($condiciones); exit;
+        $perfiles = Perfiles::find($condiciones);
         $selectPerfiles =  new Select('perfilId',$perfiles,[
             'using' => ['id','caption'],
         ]);
@@ -99,6 +103,8 @@ class FormElementsFactory
 
     public function bloqueado()
     {
+        return $this->check('bloqueado','Usuario bloqueado');
+/*
         $bloqueado=new Check('bloqueado',[
             'value' => 1, //Si esta seleccionado su valor es 1, si no es null
         ]);
@@ -106,10 +112,13 @@ class FormElementsFactory
         $bloqueado->setUserOption('decorator','renderCheck');
 
         return $bloqueado;
+*/
     }
 
     public function activo()
     {
+        return $this->check('activo','Perfil activo');
+/*
         $activo=new Check('activo',[
             'value' => 1, //Si esta seleccionado su valor es 1, si no es null
         ]);
@@ -117,8 +126,25 @@ class FormElementsFactory
         $activo->setUserOption('decorator','renderCheck');
 
         return $activo;
+*/
     }
 
+    public function publica()
+    {
+        return $this->check('publica','Acción pública');
+    }
+
+    public function check($name,$label)
+    {
+        $check = new Check($name,[
+            'value' => 1, //Si esta seleccionado su valor es 1, si no es null
+        ]);
+        $check->setLabel($label);
+        $check->setUserOption('decorator','renderCheck');
+
+        return $check;
+    }
+/*
     public function accionCheck()
     {
         $check=new Check($accionNombre,[
@@ -126,7 +152,7 @@ class FormElementsFactory
         ]);
         
     }
-
+*/
     public function csrf($value)
     {
         $csrf = new Hidden('csrf');

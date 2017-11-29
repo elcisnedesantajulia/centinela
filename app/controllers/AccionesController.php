@@ -22,7 +22,7 @@ class AccionesController extends ControllerBase
         }
         $paginator = new Paginator([
             'data'      =>$acciones,
-            'limit'     =>20,
+            'limit'     =>30,
             'page'      =>1,
             'adjacents' =>5,
         ]);
@@ -40,10 +40,12 @@ class AccionesController extends ControllerBase
                     'controladorId' =>$this->request->getPost('controladorId','int'),
                     'caption'       =>$this->request->getPost('caption',
                         ['trim','striptags']),
+                    'publica'       =>$this->request->getPost('publica')? 1 : 0 ,
                 ]);
                 if(!$accion->save()){
                     $this->flash->notice($accion->getMessages());
                 }else{
+                    $this->acl->rebuild();
                     $this->redirectIndex('La acción ha sido creada!');
                 }
             }
@@ -64,6 +66,7 @@ class AccionesController extends ControllerBase
                 'controladorId' =>$this->request->getPost('controladorId','int'),
                 'caption'       =>$this->request->getPost('caption',
                     ['trim','striptags']),
+                'publica'       =>$this->request->getPost('publica')? 1 : 0 ,
             ]);
             $form = new AccionesForm($accion);
             if($form->isValid($this->request->getPost())){
@@ -71,6 +74,7 @@ class AccionesController extends ControllerBase
                     $this->redirectIndex(implode("\n",$accion->getMessages()),
                         'error');
                 }
+                $this->acl->rebuild();
                 $this->redirectIndex('Se guardaron los cambios');
             }
         }
@@ -85,6 +89,7 @@ class AccionesController extends ControllerBase
         if(!$accion->delete()){
             $this->redirectIndex(implode("\n",$accion->getMessages()),'error');
         }
+        $this->acl->rebuild();
         $this->redirectIndex('La acción fue borrada');
     }
 

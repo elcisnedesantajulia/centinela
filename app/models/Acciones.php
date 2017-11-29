@@ -13,12 +13,19 @@ class Acciones extends Model
     public $accion;
     public $controladorId;
     public $caption;
+    public $publica;
 
     public function initialize()
     {
         $this->belongsTo('controladorId',__NAMESPACE__.'\Controladores','id',[
             'alias'     =>'controlador',
             'reusable'  =>true, // cacheado implícitamente
+        ]);
+        $this->hasMany('id',__NAMESPACE__.'\PrivilegiosAcciones','accionId',[
+            'alias'     =>'privilegios',
+            'foreignKey'=>[
+                'message'=>'No puede ser borrado porque está siendo usado en Privilegios',
+            ],
         ]);
 
         $this->addBehavior(new Timestampable([

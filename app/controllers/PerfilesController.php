@@ -3,7 +3,7 @@
 use Centinela\Forms\PerfilesForm;
 use Centinela\Models\Controladores;
 use Centinela\Models\Perfiles;
-use Centinela\Models\Privilegios;
+use Centinela\Models\PrivilegiosAcciones;
 use Centinela\PaginatorModel as Paginator;
 
 class PerfilesController extends ControllerBase
@@ -47,6 +47,7 @@ class PerfilesController extends ControllerBase
                 if(!$perfil->save()){
                     $this->flash->notice($perfil->getMessages());
                 }else{
+                    $this->acl->rebuild();
                     $this->redirectIndex('El perfil ha sido creado!');
                 }
             }
@@ -74,6 +75,7 @@ class PerfilesController extends ControllerBase
                 if(!$perfil->save()){
                     $this->redirectIndex(implode("\n",$perfil->getMessages()),'error');
                 }
+                $this->acl->rebuild();
                 $this->redirectIndex('Se guardaron los cambios');
             }
         }
@@ -85,30 +87,30 @@ class PerfilesController extends ControllerBase
     public function privilegiosAction($id)
     {
         $perfil = $this->findPerfilByIdOrRedirect($id);
+        if(!$perfil->activo){
+            $this->redirectIndex('El perfil no está activo','error');
+        }
 
         if($this->request->isPost() && $this->request->hasPost('acciones')){
-            $perfil->getPrivilegios()->delete();
-            // Privilegios de acciones tiposId=1, variable post es acciones
+            $perfil->getPrivilegiosAcciones()->delete();
             foreach($this->request->getPost('acciones') as $accionId){
-                $privilegio = new Privilegios();
+                $privilegio = new PrivilegiosAcciones();
                 $privilegio->perfilId = $id;
-                $privilegio->tiposId = 1;
-                $privilegio->recursosId = $accionId;
+                $privilegio->accionId = $accionId;
                 $privilegio->save();
             }
+            $this->acl->rebuild();
             $this->flash->success('Se actualizaron los permisos');
         }
 
         $this->view->controladores = Controladores::find([
             'order'     =>'prioridad ASC',
         ]);
-        foreach($perfil->privilegios as $privilegio){
-            if($privilegio->tiposId == 1){ //1 para privilegios de acciones
-                $privilegiosAcciones[$privilegio->recursosId]=true;
-            }
+
+        foreach($perfil->privilegiosAcciones as $privilegio){
+            $privilegiosAcciones[$privilegio->accionId]=true;
         }
         $this->view->privilegiosAcciones=$privilegiosAcciones;
-
 
         $this->view->perfil = $perfil;
     }

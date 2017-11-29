@@ -15,7 +15,7 @@
       <th>Nombre</th>
       <th>Email</th>
       <th>Perfil</th>
-      <th>Bloqueado</th>
+      <th>Estatus</th>
       <th class="col-lg-auto">Acciones</th>
     </tr>
   </thead>
@@ -26,7 +26,7 @@
       <td>{{ usuario.nombre }}</td>
       <td>{{ usuario.email }}</td>
       <td>{{ usuario.perfil.caption }}</td>
-      <td>{{ usuario.bloqueado == 1 ? 'Sí' : 'No' }}</td> 
+      <td>{{ tags.boolIcon(!usuario.bloqueado) }}</td> 
       <td>
         {{ tags.btnEdit('usuarios/edit/'~usuario.id,'Editar usuario') }}
         {{ tags.btnDeleteUser(usuario.id,usuario.nombre) }}

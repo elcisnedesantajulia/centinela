@@ -8,9 +8,17 @@ class Auth extends Component
 {
     public function getIdentidad()
     {
+        if(!$this->session->get('identidad')){
+            $this->configVisita();
+        }
         return $this->session->get('identidad');
     }
 
+    /**
+     * Checa si las credenciales son válidas y guarda en sesion una variable 
+     * de identidad
+     * @param array $credentials[email=>,password=>]
+     */
     public function check($credentials)
     {
         $usuario = Usuarios::findFirstByEmail($credentials['email']);
@@ -24,11 +32,16 @@ class Auth extends Component
             throw new Exception('Email/Password incorrectos');
         }
         $this->checkUserFlags($usuario);
-        $this->session->set('identidad',[
+        $identidad = [
             'id'    =>$usuario->id,
             'nombre'=>$usuario->nombre,
             'perfil'=>$usuario->perfil->nombre,
-        ]);
+        ];
+        // Si el perfil del usuario no está activo, se considera como 'registrado'
+        if($usuario->perfil->activo == 0){
+            $identidad['perfil']='registrado',
+        }
+        $this->session->set('identidad',$identidad);
     }
 
     public function checkUserFlags(Usuarios $usuario){
@@ -44,7 +57,16 @@ class Auth extends Component
 
     public function remove()
     {
-        $this->session->remove('identidad');
+        $this->configVisita();
+    }
+
+    private function configVisita()
+    {
+        $this->session->set('identidad',[
+            'id'    =>0,
+            'nombre'=>'Anónimo',
+            'perfil'=>'visita',
+        ]);
     }
 /*
     public function getUsuario(){

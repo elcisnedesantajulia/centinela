@@ -19,6 +19,7 @@
           {{ form.render('accion') }}
           {{ form.render('controladorId') }}
           {{ form.render('caption') }}
+          {{ form.render('publica') }}
           {{ tags.submitSuccess('Crear acción') }}
         </form>
       </div>

@@ -11,7 +11,7 @@
   <div class="col-lg-6">
     <div class="card bg-light">
       <div class="card-header">
-        Editar perfil {{ perfil.nombre }}
+        Editar perfil {{ perfil.caption }}
       </div>
       <div class="card-body">
         <form class="container" id="perfil" novalidate method="post">

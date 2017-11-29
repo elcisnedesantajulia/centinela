@@ -24,10 +24,12 @@
       <td>{{ perfil.id }}</td>
       <td>{{ perfil.nombre }}</td>
       <td>{{ perfil.caption }}</td>
-      <td>{{ perfil.activo == 1 ? 'Sí' : 'No' }}</td> 
+      <td>{{ tags.boolIcon(perfil.activo) }}</td> 
       <td>
         {{ tags.btnEdit('perfiles/edit/'~perfil.id,'Editar perfil') }}
+{%    if(perfil.activo)             %}
         {{ tags.btnPrivilegios(perfil.id) }}
+{%    endif                         %}
       </td>
     </tr>
 {% if loop.last                     %}
