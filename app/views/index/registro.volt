@@ -2,6 +2,10 @@
 <                  -->
 {{ content() }}
 
+<div class="text-right py-3">
+  {{ tags.btnRegresar(index) }}
+</div>
+
 <div class="row">
   <div class="col-lg-3">
   </div>

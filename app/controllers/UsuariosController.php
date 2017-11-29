@@ -20,9 +20,14 @@ class UsuariosController extends ControllerBase
         // Si no existe $_GET['page'] la pagina es 1
         $page = $this->request->getQuery('page', 'int', 1);
         // TODO revisar si es post y formar un Criteria
-        $params = ["borrado = 0"];
+        $condiciones[] = "borrado = 0";
+        // Unicamente los usuarios super pueden ver usuarios de su tipo
+//        $identidad = $this->auth->getIdentidad();
+        if( $this->identidad['perfil'] != 'super' ){
+            $condiciones[0].=" AND perfilId != '1'";
+        }
         // TODO buscar si hay params en la sesion
-        $usuarios = Usuarios::find($params);
+        $usuarios = Usuarios::find($condiciones);
         if(count($usuarios) == 0){
             $this->flash->notice('No hay resultados');
             return;
@@ -41,13 +46,18 @@ class UsuariosController extends ControllerBase
         $form = new UsuariosForm();
         if($this->request->isPost()){
             if($form->isValid($this->request->getPost())){
+                $perfilId = $this->request->getPost('perfilId','int');
+                // Solo un usuario de tipo super puede crear otro super
+                if( $this->identidad['perfil'] != 'super' && $perfilId==1){
+                    $this->redirectIndex('Error de permisos','error');
+                }
                 $usuario = new Usuarios([
                     'nombre'    =>$this->request->getPost('nombre',
                         ['trim','striptags']),
                     'email'     =>$this->request->getPost('email','email'),
                     'password'  =>$this->security->hash(
                         $this->request->getPost('password')),
-                    'perfilId'  =>$this->request->getPost('perfilId','int'),
+                    'perfilId'  =>$perfilId,
                     'bloqueado' =>0,
                 ]);
                 if(!$usuario->save()){
@@ -67,11 +77,16 @@ class UsuariosController extends ControllerBase
             'edit'=>true
         ]);
         if($this->request->isPost()){
+            $perfilId = $this->request->getPost('perfilId','int');
+            // Solo un usuario de tipo super puede crear otro super
+            if( $this->identidad['perfil'] != 'super' && $perfilId==1){
+                $this->redirectIndex('Error de permisos','error');
+            }
             $usuario->assign([
                 'nombre'    =>$this->request->getPost('nombre',
                     ['trim','striptags']),
                 'email'     =>$this->request->getPost('email',['email','lower']),
-                'perfilId'  =>$this->request->getPost('perfilId','int'),
+                'perfilId'  =>$perfilId,
                 'bloqueado' =>($this->request->getPost('bloqueado'))? 1 : 0 ,
             ]);
             $form = new UsuariosForm($usuario,[
@@ -120,6 +135,10 @@ class UsuariosController extends ControllerBase
         $usuario = Usuarios::findFirstById($id);
         if(!$usuario){
             $this->redirectIndex('No se encontró el usuario','error');
+        }
+        // Unicamente los usuarios super pueden ver usuarios de su tipo
+        if($this->identidad['perfil'] != 'super' && $usuario->perfilId==1){
+            $this->redirectIndex('Error de permisos','error');
         }
 
         return $usuario;

@@ -8,7 +8,7 @@
         {{ auth.getNombre() }}
       </a>
       <div class="dropdown-menu" aria-labelledby="userMenu">
-        {{ link_to('sesion/logout', 'Cerrar sesión', "class":"dropdown-item") }}
+        {{ link_to('index/logout', 'Cerrar sesión', "class":"dropdown-item") }}
       </div>
     </li>
   </ul>

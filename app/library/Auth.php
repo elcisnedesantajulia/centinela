@@ -39,7 +39,7 @@ class Auth extends Component
         ];
         // Si el perfil del usuario no está activo, se considera como 'registrado'
         if($usuario->perfil->activo == 0){
-            $identidad['perfil']='registrado',
+            $identidad['perfil'] = 'registrado';
         }
         $this->session->set('identidad',$identidad);
     }

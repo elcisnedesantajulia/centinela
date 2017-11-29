@@ -72,7 +72,8 @@ class FormElementsFactory extends Component
     public function perfiles()
     {
         // TODO implementar reglas segun los privilegios de usuario
-        $condiciones[]='activo = 1';
+        $condiciones[]="activo = 1 AND nombre != 'visita'";
+        // Evita que un usuario que no sea super, cree un usuario super
         $identidad = $this->auth->getIdentidad();
         if( $identidad['perfil'] != 'super' ){
             $condiciones[0].=" AND nombre != 'super'";

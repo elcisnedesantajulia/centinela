@@ -6,16 +6,18 @@ use Phalcon\Mvc\Dispatcher;
 class ControllerBase extends Controller
 {
     protected $index = 'index/index';
+    protected $identidad ;
 
     public function beforeExecuteRoute(Dispatcher $dispatcher){
         $this->displayRedirectMessages();
         $this->view->setVar('debug','fuera');
         $this->view->setVar('is_auth',false);
         $this->view->menu=[
-            'Registro'=>'sesion/registro',
+            'Registro'=>'index/registro',
         ];
-        $identidad = $this->auth->getIdentidad();
-        if( $identidad['perfil'] != 'visita' ){
+        
+        $this->identidad = $this->auth->getIdentidad();
+        if( $this->identidad['perfil'] != 'visita' ){
             $this->view->setVar('is_auth',true);
             $this->view->setVar('debug','dentro');
             $this->view->menu=[
@@ -31,8 +33,8 @@ class ControllerBase extends Controller
         $accion = $dispatcher->getActionName();
 
         $recurso=$controlador.'/'.$accion;
-        if (!$this->acl->isAllowed($identidad['perfil'],$recurso,'use')){
-            if( $identidad['perfil'] != 'visita' ){
+        if (!$this->acl->isAllowed($this->identidad['perfil'],$recurso,'use')){
+            if( $this->identidad['perfil'] != 'visita' ){
                 $this->flash->error('Error inesperado, notifícalo al administrador');
             }
             $dispatcher->forward([
