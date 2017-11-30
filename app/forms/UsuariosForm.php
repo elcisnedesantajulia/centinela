@@ -23,16 +23,5 @@ class UsuariosForm extends Form
         $this->add($factory->perfiles());
         $this->add($factory->bloqueado());
     }
-/*
-    public function afterValidation2(){
-        foreach($this as $element){
-            if($this->hasMessagesFor($element->getName())){
-                $element->setUserOption('valid','invalid');
-            }else{
-                $element->setUserOption('valid','valid');
-            }
-        }
-    }
-*/
 }
 

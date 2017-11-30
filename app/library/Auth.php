@@ -68,18 +68,19 @@ class Auth extends Component
             'perfil'=>'visita',
         ]);
     }
-/*
+
     public function getUsuario(){
-        $identidad=$this->session->get('identidad');
-        if(isset($identidad['id'])){
-            $usuario = Usuarios::findFirstById($identidad'id']);
-            if($usuario==false){
-                throw new Exception('El usuario no existe');
-            }
-            return $usuario;
+        $identidad = $this->getIdentidad();
+        if(!( isset($identidad['id']) && $identidad['id'] )){
+            throw new Exception('Error obteniendo identidad');
         }
-        return false;
+
+        $usuario = Usuarios::findFirstById($identidad['id']);
+        if($usuario==false){
+            throw new Exception('El usuario no existe');
+        }
+
+        return $usuario;
     }
-*/
 }
 

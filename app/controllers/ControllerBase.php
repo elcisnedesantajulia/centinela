@@ -8,18 +8,24 @@ class ControllerBase extends Controller
     protected $index = 'index/index';
     protected $identidad ;
 
-    public function beforeExecuteRoute(Dispatcher $dispatcher){
+    public function beforeExecuteRoute(Dispatcher $dispatcher)
+    {
+        $this->identidad = $this->auth->getIdentidad();
+        $this->view->perfil = $this->identidad['perfil'];
+        // TODO implementar una clase para generar y cachear menus 
+        $this->view->menu = $this->getMenu();
         $this->displayRedirectMessages();
-        $this->view->setVar('debug','fuera');
-        $this->view->setVar('is_auth',false);
+//        $this->view->setVar('debug','fuera');
+//        $this->view->setVar('is_auth',false);
+/*
         $this->view->menu=[
             'Registro'=>'index/registro',
         ];
-        
-        $this->identidad = $this->auth->getIdentidad();
-        if( $this->identidad['perfil'] != 'visita' ){
-            $this->view->setVar('is_auth',true);
-            $this->view->setVar('debug','dentro');
+*/
+//        if( $this->identidad['perfil'] != 'visita' ){
+//            $this->view->setVar('is_auth',true);
+//            $this->view->setVar('debug','dentro');
+/*
             $this->view->menu=[
                 'Administración'=>[
                     'Perfiles'      =>'perfiles/index',
@@ -28,7 +34,8 @@ class ControllerBase extends Controller
                     'Acciones'      =>'acciones/index',
                 ],
             ];
-        }
+*/
+//        }
         $controlador = $dispatcher->getControllerName();
         $accion = $dispatcher->getActionName();
 
@@ -64,5 +71,39 @@ class ControllerBase extends Controller
         $this->response->redirect($this->index);
         $this->response->send();
         exit;
+    }
+
+    private function getMenu()
+    {
+        // TODO implementar una clase para generar y cachear menus
+        $perfil = isset($this->identidad['perfil']) ? 
+            $this->identidad['perfil'] : 'visita';
+        switch($perfil){
+            case 'super': 
+                $menu = [
+                    'Administración'=>[
+                        'Perfiles'      =>'perfiles/index',
+                        'Usuarios'      =>'usuarios/index',
+                        'Controladores' =>'controladores/index',
+                        'Acciones'      =>'acciones/index',
+                    ],
+                ];
+                break;
+            case 'admin': 
+                $menu = [
+                    'Administración'=>[
+                        'Usuarios'      =>'usuarios/index',
+                    ],
+                ];
+                break;
+            case 'visita':
+                $menu = [
+                    'Registro'=>'index/registro',
+                ];
+                break;
+            default: $menu = [];
+        }
+
+        return $menu;
     }
 }

@@ -60,11 +60,10 @@ class UsuariosController extends ControllerBase
                     'perfilId'  =>$perfilId,
                     'bloqueado' =>0,
                 ]);
-                if(!$usuario->save()){
-                    $this->flash->notice($usuario->getMessages());
-                }else{
+                if($usuario->save()){
                     $this->redirectIndex('El usuario ha sido creado!');
                 }
+                $this->flash->notice($usuario->getMessages());
             }
         }
         $this->view->form = $form;
@@ -118,12 +117,13 @@ class UsuariosController extends ControllerBase
         $form = new ChangePasswordForm();
         if($this->request->isPost()){
             if($form->isValid($this->request->getPost())){
-                $usuario->password=$this->security->hash($this->request->getPost('password'));
-                if(!$usuario->save()){
-                    $this->flash->error($usuario->getMessages());
-                }else{
+                $usuario->password=$this->security->hash(
+                    $this->request->getPost('password')
+                );
+                if($usuario->save()){
                     $this->redirectIndex('El password ha sido cambiado');
                 }
+                $this->flash->error($usuario->getMessages());
             }
         }
         $this->view->usuario = $usuario;

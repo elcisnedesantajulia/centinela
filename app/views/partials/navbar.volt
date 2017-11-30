@@ -37,7 +37,7 @@
         {%endfor                                %}
       </ul>
 <!-- ====> Items derecha -->
-{%if is_auth == true                %}
+{%if( perfil != 'visita' )          %}
 {{ partial('partials/userMenu')     }}
 {%else                              %}
 {%  if is_registro is not defined   %}

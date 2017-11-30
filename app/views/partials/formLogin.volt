@@ -1,6 +1,6 @@
 <!-- @start formLogin >
 <                   -->
-  <form class="form-inline" method="post" action="{{ url("sesion/login") }}" >
+  <form class="form-inline" method="post" action="{{ url("index/login") }}" >
     <input class="form-control mr-sm-2" type="email" placeholder="email" 
           aria-label="email" id="email" name="email"/>
     <input class="form-control mr-sm-2" type="password" placeholder="Password" 

@@ -38,6 +38,17 @@ class FormElementsFactory extends Component
         return $id;
     }
 
+    public function oldPassword()
+    {
+        $message = 'Debes ingresar el password actual';
+        $old = new Password('old');
+        $this->configRequired($old,'Password actual',$message);
+        $old->setUserOption('decorator','renderText');
+
+        return $old;
+    }
+
+
     public function password()
     {
         $message = 'El password debe tener al menos 8 caracteres';
@@ -78,7 +89,6 @@ class FormElementsFactory extends Component
         if( $identidad['perfil'] != 'super' ){
             $condiciones[0].=" AND nombre != 'super'";
         }
-//var_dump($condiciones); exit;
         $perfiles = Perfiles::find($condiciones);
         $selectPerfiles =  new Select('perfilId',$perfiles,[
             'using' => ['id','caption'],
@@ -105,29 +115,11 @@ class FormElementsFactory extends Component
     public function bloqueado()
     {
         return $this->check('bloqueado','Usuario bloqueado');
-/*
-        $bloqueado=new Check('bloqueado',[
-            'value' => 1, //Si esta seleccionado su valor es 1, si no es null
-        ]);
-        $bloqueado->setLabel('Usuario bloqueado');
-        $bloqueado->setUserOption('decorator','renderCheck');
-
-        return $bloqueado;
-*/
     }
 
     public function activo()
     {
         return $this->check('activo','Perfil activo');
-/*
-        $activo=new Check('activo',[
-            'value' => 1, //Si esta seleccionado su valor es 1, si no es null
-        ]);
-        $activo->setLabel('Perfil activo');
-        $activo->setUserOption('decorator','renderCheck');
-
-        return $activo;
-*/
     }
 
     public function publica()
@@ -145,15 +137,7 @@ class FormElementsFactory extends Component
 
         return $check;
     }
-/*
-    public function accionCheck()
-    {
-        $check=new Check($accionNombre,[
-            'value' => $accionId,
-        ]);
-        
-    }
-*/
+
     public function csrf($value)
     {
         $csrf = new Hidden('csrf');

@@ -1,5 +1,4 @@
-<?php
-namespace Centinela\Forms;
+<?php namespace Centinela\Forms;
 
 use Centinela\FormElementsFactory as Factory;
 use Centinela\Bootstrap4Form as Form;

@@ -3,6 +3,7 @@
 use Centinela\Models\Usuarios;
 use Centinela\Forms\RegistroForm;
 use Centinela\Forms\LoginForm;
+use Centinela\Forms\ChangePasswordForm;
 use Centinela\Exception;
 use Centinela\TagsFactory as Tags;
 
@@ -36,9 +37,8 @@ class IndexController extends ControllerBase
             }
         }
         $this->view->form = $form;
-//        $this->view->tags = new Tags;
         $this->view->menu=[];
-        $this->view->setVar('is_registro',true);
+        $this->view->is_registro = true;
     }
 
     public function loginAction()
@@ -62,9 +62,44 @@ class IndexController extends ControllerBase
         }
     }
 
-    public function logoutAction(){
+    public function logoutAction()
+    {
         $this->auth->remove();
         return $this->response->redirect('index');
+    }
+
+    public function passwordAction()
+    {
+        $usuario = $this->auth->getUsuario();
+        if(!$usuario){
+            $this->redirectIndex('No se encontró el usuario','error');
+        }
+        $form = new ChangePasswordForm(null,['old'=>true]);
+
+        if($this->request->isPost()){
+            if($form->isValid($this->request->getPost())){
+                $old = $this->request->getPost('old');
+                if($this->security->checkHash($old,$usuario->password)){
+                    $usuario->password=$this->security->hash(
+                        $this->request->getPost('password')
+                    );
+                    if($usuario->save()){
+                        $this->redirectIndex('El password ha sido cambiado');
+                    }
+                    $this->flash->error($usuario->getMessages());
+                }else{
+                    $this->flash->error('El password actual no es válido');
+                }
+            }
+        }
+
+        $this->view->usuario = $usuario;
+        $this->view->form = $form;
+    }
+
+    public function cuentaAction()
+    {
+        $this->view->usuario = $this->auth->getUsuario();
     }
 }
 
