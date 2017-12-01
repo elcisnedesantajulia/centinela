@@ -1,5 +1,6 @@
 <?php namespace Centinela\Controllers;
 
+use Phalcon\Mvc\Model\Criteria;
 use Centinela\Forms\AccionesForm;
 use Centinela\Models\Acciones;
 use Centinela\PaginatorModel as Paginator;
@@ -14,16 +15,35 @@ class AccionesController extends ControllerBase
 
     public function indexAction()
     {
-        $params = [];
-        $acciones = Acciones::find($params);
-        if(count($acciones) == 0){
-            $this->flash->notice('No hay resultados');
-            return;
+        $form = new AccionesForm(null,[
+            'inline'=>true,
+            'empty'=>true,
+        ]);
+        $page = 1;
+        if($this->request->isPost()){
+            $query=Criteria::fromInput($this->di,'Centinela\Models\Acciones',$this->request->getPost());
+            $query->orderBy('controladorId,publica DESC,id');
+            $this->persistent->accionesCondiciones=$query->getParams();
+        }else{
+            // Si no existe $_GET['page'] la pagina es 1
+            $page = $this->request->getQuery('page', 'int', 1);
         }
+        $condiciones = [
+            'order' => 'controladorId,publica DESC,id'
+        ];
+        if($this->persistent->accionesCondiciones){
+            $condiciones = $this->persistent->accionesCondiciones;
+            if(isset($condiciones['bind'])){
+                $form->bind($condiciones['bind'],new Acciones());
+            }
+        }
+        $this->view->form = $form;
+        $acciones = Acciones::find($condiciones);
+        if(count($acciones) == 0){ return; }
         $paginator = new Paginator([
             'data'      =>$acciones,
-            'limit'     =>30,
-            'page'      =>1,
+            'limit'     =>10,
+            'page'      =>$page,
             'adjacents' =>5,
         ]);
         $this->view->paginator = $paginator->getPaginate();

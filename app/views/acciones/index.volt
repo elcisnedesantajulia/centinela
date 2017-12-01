@@ -6,12 +6,25 @@
   {{ tags.btnCreateAccion() }}
 </div>
 
+<div class="card bg-light my-2">
+  <div class="card-body py-1">
+    <form class="form-inline" method="post" autocomplete="off">
+      <span class="mr-2">Filtros: </span>
+{{ form.render('controladorId') }}
+{{ form.render('publica') }}
+{{ tags.submitInfoInline('Aplicar filtros') }}
+    </form>
+  </div>
+</div>
+
+{{ partial('partials/paginator') }}
+
 {% for accion in paginator.items   %}
 {% if loop.first                    %}
 <table class="table table-bordered table-striped table-hover">
   <thead>
     <tr>
-      <th>ID</th>
+      <!--th>ID</th-->
       <th>Controlador</th>
       <th>Acción</th>
       <th>Descripción</th>
@@ -22,7 +35,7 @@
   <tbody>
 {% endif                            %}
     <tr>
-      <td>{{ accion.id }}</td>
+      <!--td>{{ accion.id }}</td-->
       <td>{{ accion.controlador.controlador }}</td>
       <td>
         {{ link_to(accion.getPath(),accion.accion,'title':accion.getPath()) }}
@@ -39,8 +52,15 @@
 </table>
 {% endif                            %}
 {% else                             %}
-No hay resultados
+<div class="card bg-light my-2">
+  <div class="card-body py-1">
+    No hay resultados
+  </div>
+</div>
 {% endfor                           %}
+
+{{ partial('partials/paginator') }}
+
 {{ partial('partials/deleteAccionModal') }}
 <!-- @end acciones/index -->
 

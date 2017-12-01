@@ -34,7 +34,7 @@
       <td>
 {%      endif                               %}
 {%      if accion.publica                   %}
-          <span class="oi oi-circle-check text-success"></span>
+          {{ tags.icon('task','success') }}
           {{ accion.caption }}<br />
 {%      else                                %}
 {%        set checked = (privilegiosAcciones[accion.id] is defined) ? true : false %}

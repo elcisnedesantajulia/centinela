@@ -99,17 +99,37 @@ class FormElementsFactory extends Component
         return $selectPerfiles;
     }
 
-    public function controladores()
+    public function controladores($inline=false,$empty=false)
     {
         $controladores = Controladores::find();
-        $selectControladores = new Select('controladorId',$controladores,[
-            'using' => ['id','controlador'],
-        ]);
+        $atributos_empty=[
+                'useEmpty' => true,
+                'emptyText' => '...',
+                'emptyValue' => ''
+            ];
+        $atributos = $empty ? $atributos_empty : [];
+        $atributos['using'] = ['id','controlador'];
+        
+        $selectControladores = new Select('controladorId',$controladores,$atributos);
         $selectControladores->setLabel('Elige controlador:');
-        $selectControladores->setDefault(1);
-        $selectControladores->setUserOption('decorator','renderSelect');
+//        $selectControladores->setDefault(1);
+        $decorator = $inline ? 'renderSelectInline' : 'renderSelect';
+        $selectControladores->setUserOption('decorator',$decorator);
 
         return $selectControladores;
+    }
+
+    public function selectPublica()
+    {
+        $opciones=[
+            ''=>'...',
+            '0'=>'Acciones Privadas',
+            '1'=>'Acciones Públicas',
+        ];
+        $selectPublica = new Select('publica',$opciones);
+        $selectPublica->setUserOption('decorator','renderSelectInline');
+
+        return $selectPublica;
     }
 
     public function bloqueado()

@@ -7,11 +7,17 @@ class AccionesForm extends Form
 {
     public function initialize($entity=null,$options=null)
     {
+        $inline = (isset($options['inline']) && $options['inline']==true ) ? 
+            true : false;
+        $empty = (isset($options['empty']) && $options['empty']==true ) ?
+            true : false;
         $factory = new Factory();
         $this->add($factory->accion());
-        $this->add($factory->controladores());
+        $this->add($factory->controladores($inline,$empty));
         $this->add($factory->caption());
-        $this->add($factory->publica());
+        $this->add(
+            $inline ? $factory->selectPublica() : $factory->publica()
+        );
     }
 }
 

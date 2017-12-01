@@ -24,16 +24,6 @@ class Perfiles extends Model
                 'message'=>'No puede ser borrado porque está siendo usado en Usuarios',
             ],
         ]);
-// @start TODO borrar
-/*
-        $this->hasMany('id',__NAMESPACE__.'\Privilegios','perfilId',[
-            'alias'     =>'privilegios',
-            'foreignKey'=>[
-                'message'=>'No puede ser borrado porque está siendo usado en Privilegios',
-            ],
-        ]);
-*/
-// @end TODO borrar
         $this->hasMany('id',__NAMESPACE__.'\PrivilegiosAcciones','perfilId',[
             'alias'     =>'privilegiosAcciones',
             'foreignKey'=>[

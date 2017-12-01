@@ -17,9 +17,12 @@ class Controladores extends Model
         $this->hasMany('id',__NAMESPACE__.'\Acciones','controladorId',[
             'alias'     =>'acciones',
             'params'    =>[
-                'order' => 'accion ASC',
+                'order' => 'publica,id',
             ],
-            'foreignKey'=>['No puede ser borrado porque está siendo usado en Acciones'],
+            'foreignKey'=>[
+                'message'=>'No puede ser borrado porque existen Acciones que '.
+                    'estan usando este Controlador'
+            ],
         ]);
 
         $this->addBehavior(new Timestampable([

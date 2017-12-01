@@ -7,7 +7,7 @@
           aria-label="password" id="password" name="password"/>
     <input type="hidden" id="csrf" name="csrf" value="{{security.getToken()}}" />
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >
-        Ingresar
+        {{ tags.login() }} Ingresar
     </button>
   </form>
 <!--               > 

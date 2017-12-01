@@ -5,12 +5,15 @@
       <a class="nav-link dropdown-toggle" href="#" 
             id="userMenu" data-toggle="dropdown" 
             aria-haspopup="true" aria-expanded="false">
-        {{ auth.getNombre() }}
+        {{ tags.icon('person') ~ ' ' ~auth.getNombre() }}
       </a>
       <div class="dropdown-menu" aria-labelledby="userMenu">
-        {{ link_to('index/cuenta', 'Mi cuenta', "class":"dropdown-item") }}
-        {{ link_to('index/password', 'Cambiar password', "class":"dropdown-item") }}
-        {{ link_to('index/logout', 'Cerrar sesión', "class":"dropdown-item") }}
+        {{ link_to('index/cuenta', tags.icon('clipboard') ~ ' Mi cuenta', 
+            "class":"dropdown-item") }}
+        {{ link_to('index/password', tags.icon('key') ~ ' Cambiar password', 
+            "class":"dropdown-item") }}
+        {{ link_to('index/logout', tags.logout() ~' Cerrar sesión', 
+            "class":"dropdown-item") }}
       </div>
     </li>
   </ul>

@@ -122,6 +122,14 @@ $submit
 html;
     }
 
+    public function submitInfoInline($caption)
+    {
+        return  Tag::submitButton([
+            $caption,
+            'class' => 'btn btn-outline-info mr-2',
+        ]);
+    }
+
     public function checkPrivilegio($id,$label,$checked=false,$tabla='acciones')
     {
         $name = $tabla.'[]';
@@ -162,6 +170,24 @@ html;
         }
         return <<<html
 <span class="oi oi-$icono text-$color"></span>
+html;
+    }
+
+    public function login()
+    {
+        return $this->icon('account-login');
+    }
+
+    public function logout()
+    {
+        return $this->icon('account-login','danger');
+    }
+
+    public function icon($name,$color=null)
+    {
+        $html_color = (is_string($color)) ? "text-$color" : '';
+        return <<<html
+<span class="oi oi-$name $html_color"></span>
 html;
     }
 }

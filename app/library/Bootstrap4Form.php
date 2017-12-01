@@ -100,6 +100,18 @@ html;
 html;
     }
 
+    public function renderSelectInline($name)
+    {
+        $element=$this->get($name);
+        $element->setAttribute('class','form-control mr-2');
+        $render = $element->render();
+        return <<<html
+<div class="form-group">
+  $render
+</div>
+html;
+    }
+
     public function renderCheck($name)
     {
         $element=$this->get($name);
