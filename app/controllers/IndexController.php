@@ -101,5 +101,10 @@ class IndexController extends ControllerBase
     {
         $this->view->usuario = $this->auth->getUsuario();
     }
+
+    public function instalacionAction()
+    {
+
+    }
 }
 
