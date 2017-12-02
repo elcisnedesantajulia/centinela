@@ -1,7 +1,7 @@
 # Centinela
 Ejemplo de uso de Phalcon Framework con autenticación y lista de control de acceso (usuarios, permisos y perfiles).
 
-##Requisitos
+## Requisitos
 
 Necesitarás al menos:
 
@@ -11,16 +11,19 @@ Necesitarás al menos:
 * La más reciente extensión de [Phalcon Framework](https://github.com/phalcon/cphalcon)
 * `Git`
 
-##Instalación
+## Instalación
 
-1. Clona el repositorio Git
+1. Clona el repositorio Git.
+
     `git clone https://github.com/elcisnedesantajulia/centinela.git`
 
 2. Crea la base de datos del proyecto e inicializa con el schema:
+
     `echo 'CREATE DATABASE centinela' | mysql -u root`
     `cat schemas/centinela.sql | mysql -u root centinela`
 
-3. Configura la base de datos en `app/config/config.php`
+3. Configura la base de datos en `app/config/config.php`.
+
     Reemplaza estas líneas por las correctas en tu proyecto:
 
             `'host'        => 'localhost',`
@@ -30,13 +33,26 @@ Necesitarás al menos:
 
     También puedes sobreescribir la configuración creando el archivo `app/config/config.dev.php`, el cual es ignorado por Git.
 
-4. Configura el directorio raíz de tu proyecto en `app/config/config.php`
+4. Configura el directorio raíz de tu proyecto en `app/config/config.php`.
 
             `'baseUri'     => '/c/',`
 
-    Para terminar, da permisos recursivos de escritura al directorio cache
+5. Para terminar, da permisos recursivos de escritura al directorio cache.
     `chmod -R 777 cache`
 
-## Screeshots
+## Demo
+
+Prueba este Demo creando una cuenta [aquí](https://centinela.softle.com/).
+
+Centinela es un proyecto de open source. No dudes en enviar tus comentarios, reportar bugs o sugerir alguna mejora o nueva funcionalidad a contacto@softle.com, así como enviar un Pull Request. 
+
+## Screenshots
+
 ![home 1](/public/img/home1.png)
+
+![home 2](/public/img/home2.png)
+
+![home 3](/public/img/home3.png)
+
+![home 4](/public/img/home4.png)
 
