@@ -9,18 +9,19 @@ Necesitarás al menos:
 * `MySQL 5.1.5`
 * Apache WEB Server con `mod_rewrite enabled` y `AllowOverride Options` (o `All`) en tu `httpd.conf`.
 * La más reciente extensión de [Phalcon Framework](https://github.com/phalcon/cphalcon)
-* `Git`
 
 ## Instalación
 
-1. Clona el repositorio Git.
+1. Clona el repositorio.
 
     `git clone https://github.com/elcisnedesantajulia/centinela.git`
 
 2. Crea la base de datos del proyecto e inicializa con el schema:
 
-    `echo 'CREATE DATABASE centinela' | mysql -u root`
-    `cat schemas/centinela.sql | mysql -u root centinela`
+```bash
+    echo 'CREATE DATABASE centinela' | mysql -u root
+    cat schemas/centinela.sql | mysql -u root centinela
+```
 
 3. Configura la base de datos en `app/config/config.php`.
 
@@ -50,9 +51,15 @@ Centinela es un proyecto de open source. No dudes en enviar tus comentarios, rep
 
 ![home 1](/public/img/home1.png)
 
+---
+
 ![home 2](/public/img/home2.png)
 
+---
+
 ![home 3](/public/img/home3.png)
+
+---
 
 ![home 4](/public/img/home4.png)
 
