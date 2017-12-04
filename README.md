@@ -14,13 +14,15 @@ Necesitarás al menos:
 
 1. Clona el repositorio.
 
-    `git clone https://github.com/elcisnedesantajulia/centinela.git`
+```bash
+git clone https://github.com/elcisnedesantajulia/centinela.git
+```
 
 2. Crea la base de datos del proyecto e inicializa con el schema:
 
 ```bash
-    echo 'CREATE DATABASE centinela' | mysql -u root
-    cat schemas/centinela.sql | mysql -u root centinela
+echo 'CREATE DATABASE centinela' | mysql -u root
+cat schemas/centinela.sql | mysql -u root centinela
 ```
 
 3. Configura la base de datos en `app/config/config.php`.
@@ -33,7 +35,7 @@ Necesitarás al menos:
             'password'    => 'config.dev',
             'dbname'      => 'centinela',
 ```
-    También puedes sobreescribir la configuración creando el archivo `app/config/config.dev.php`, el cual es ignorado por Git.
+También puedes sobreescribir la configuración creando el archivo `app/config/config.dev.php`, el cual es ignorado por Git.
 
 4. Configura el directorio raíz de tu proyecto en `app/config/config.php`.
 
@@ -42,11 +44,13 @@ Necesitarás al menos:
 ```
 5. Da permisos recursivos de escritura al directorio cache.
 
-    `chmod -R 777 cache`
+```bash
+chmod -R 777 cache
+```
 
 6. Para terminar, crea una cuenta.
 
-    Crea un cuenta en tu sitio recién instalado y dale permisos de Super Usuario (`perfilId` = 1 en tabla `usuarios`).
+Crea un cuenta en tu sitio recién instalado y dale permisos de Super Usuario (`perfilId` = 1 en tabla `usuarios`).
 
 ## Demo
 
