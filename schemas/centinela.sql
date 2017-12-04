@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: amazon1.cdw2navziivl.us-west-2.rds.amazonaws.com:3306
--- Generation Time: Dec 01, 2017 at 05:08 PM
+-- Generation Time: Dec 04, 2017 at 01:58 PM
 -- Server version: 5.6.27-log
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -188,7 +188,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `mtime`, `ctime`, `nombre`, `email`, `password`, `perfilId`, `bloqueado`, `borrado`) VALUES
-(1, '2017-12-01 19:05:11', '2017-10-20 22:39:05', 'John Doe', 'john.doe@gmail.com', '$2y$08$ZHhnZG43YXZHZ0tXdUlnU.oKP4euJ1QFaCbl6tOczh7MfXcHgOJmW', 1, 0, 0),
+(1, '2017-12-04 19:42:44', '2017-10-20 22:39:05', 'John Doe', 'john.doe@gmail.com', '$2y$08$cDg5YzlpcGgzZHZqUGZYaO.B2QOr4/C2GVFQZOR0U/ZUjmj.knoiK', 1, 0, 0),
 (2, '2017-12-01 19:05:52', '2017-10-20 22:40:44', 'Juan Perez', 'juan.perez@gmail.com', '$2y$08$amovd0duMGpGRGlNT09qauhwatkChkitOsBrSQQfQ5n4fpey6E82e', 2, 0, 0),
 (3, '2017-12-01 19:06:35', '2017-11-08 23:40:52', 'Fulano Díaz', 'abc@a.com', '$2y$08$R2l4UndiUVNDUmcyWUd2d.S0Z6OTBFT3kbIwCSkTP0UHjj08Yh.IO', 5, 0, 0),
 (4, '2017-12-01 19:06:56', '2017-11-09 22:21:38', 'Perengano Noches', 'b@gmail.com', '$2y$08$TjdDU1J2aGpXU01uRXNSYeutQWBMOyyPK6DoPt8MpK1qj3OnAd12W', 3, 0, 0);
@@ -247,3 +247,32 @@ ALTER TABLE `usuarios`
   ADD KEY `perfilId` (`perfilId`) USING BTREE,
   ADD KEY `borrado` (`borrado`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `acciones`
+--
+ALTER TABLE `acciones`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT for table `controladores`
+--
+ALTER TABLE `controladores`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `perfiles`
+--
+ALTER TABLE `perfiles`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `privilegios_acciones`
+--
+ALTER TABLE `privilegios_acciones`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+--
+-- AUTO_INCREMENT for table `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
