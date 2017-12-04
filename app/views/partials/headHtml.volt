@@ -8,7 +8,7 @@
     href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" 
     integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" 
     crossorigin="anonymous">
-    <link href="/c/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url('open-iconic/font/css/open-iconic-bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url('css/centinela.css') }}" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" 
         href="{{ url('favicon/apple-touch-icon.png') }}">
