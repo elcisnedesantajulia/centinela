@@ -3,7 +3,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
 <!-- Brand -->
-    {{ link_to('index/index','<img src="/c/favicon/favicon-32x32.png" width="28" height="28" alt="Logo Centinela"> Centinela',"class":"navbar-brand") }}
+    <a href="{{ url('index/index') }}" class="navbar-brand">
+      <img src="{{ url('favicon/favicon-32x32.png') }}" width="28" height="28" 
+            alt="Logo Centinela"> Centinela
+    </a>
 
 <!-- Boton Colapsa -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" 

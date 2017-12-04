@@ -9,10 +9,14 @@
     integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" 
     crossorigin="anonymous">
     <link href="/c/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
-    <link href="https://centinela.softle.com/c/css/centinela.css" rel="stylesheet">
-<link rel="apple-touch-icon" sizes="180x180" href="/c/favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/c/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/c/favicon/favicon-16x16.png">
-<link rel="manifest" href="/c/favicon/manifest.json">
-<link rel="mask-icon" href="/c/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link href="{{ url('css/centinela.css') }}" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="180x180" 
+        href="{{ url('favicon/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" 
+        href="{{ url('favicon/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" 
+        href="{{ url('favicon/favicon-16x16.png') }}">
+<link rel="manifest" href="{{ url('favicon/manifest.json') }}">
+<link rel="mask-icon" href="{{ url('favicon/safari-pinned-tab.svg') }}" 
+        color="#5bbad5">
   </head>

@@ -48,7 +48,9 @@ También puedes sobreescribir la configuración creando el archivo `app/config/c
 chmod -R 777 cache
 ```
 
-6. Para terminar, crea una cuenta.
+6. Asegúrate de que la carpeta `public/` sea visible desde Apache.
+
+7. Para terminar, crea una cuenta.
 
 Crea un cuenta en tu sitio recién instalado y dale permisos de Super Usuario (`perfilId` = 1 en tabla `usuarios`).
 

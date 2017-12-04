@@ -50,6 +50,8 @@ También puedes sobreescribir la configuración creando el archivo
 <li>Da permisos recursivos de escritura al directorio cache</li>
 <code>chmod -R 777 cache</code>
 <br /><br />
+<li>Asegúrate de que la carpeta <code>public/</code> sea visible desde Apache.</li>
+<br />
 <li>Para terminar, crea una cuenta.</li>
 Crea un cuenta en tu sitio recién instalado y dale permisos de Super Usuario (<code>perfilId</code> = 1 en tabla <code>usuarios</code>).
 
