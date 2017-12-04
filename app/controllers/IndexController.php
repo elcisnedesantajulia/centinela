@@ -26,7 +26,7 @@ class IndexController extends ControllerBase
                     'nombre'=>$this->request->getPost('nombre','striptags'),
                     'email' =>$this->request->getPost('email'),
                     'password'=>$this->security->hash($this->request->getPost('password')),
-                    'perfilId'=>4,
+                    'perfilId'=>3,
                 ]);
                 if($usuario->save())
                 {
