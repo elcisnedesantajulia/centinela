@@ -28,17 +28,17 @@ Necesitarás al menos:
     Reemplaza estas líneas por las correctas en tu proyecto:
 
 ```php
-            `'host'        => 'localhost',`
-            `'username'    => 'phalcon',`
-            `'password'    => 'config.dev',`
-            `'dbname'      => 'centinela',`
+            'host'        => 'localhost',
+            'username'    => 'phalcon',
+            'password'    => 'config.dev',
+            'dbname'      => 'centinela',
 ```
     También puedes sobreescribir la configuración creando el archivo `app/config/config.dev.php`, el cual es ignorado por Git.
 
 4. Configura el directorio raíz de tu proyecto en `app/config/config.php`.
 
 ```php
-            `'baseUri'     => '/c/',`
+            'baseUri'     => '/c/',
 ```
 5. Da permisos recursivos de escritura al directorio cache.
 
