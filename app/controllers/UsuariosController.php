@@ -1,5 +1,4 @@
-<?php
-namespace Centinela\Controllers;
+<?php namespace Centinela\Controllers;
 
 //use Phalcon\Mvc\Model\Criteria;
 use Centinela\Forms\UsuariosForm;

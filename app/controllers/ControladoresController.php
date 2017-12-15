@@ -39,11 +39,10 @@ class ControladoresController extends ControllerBase
                     'controlador'=>$this->request->getPost('controlador',
                         ['trim','striptags','lower']),
                 ]);
-                if(!$controlador->save()){
-                    $this->flash->notice($controlador->getMessages());
-                }else{
+                if($controlador->save()){
                     $this->redirectIndex('El controlador ha sido creado!');
                 }
+                $this->flash->notice($controlador->getMessages());
             }
         }
 

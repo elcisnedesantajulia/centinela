@@ -23,9 +23,6 @@ class TagsFactory
     public function btnDeleteUser($id,$name)
     {
         return $this->btnModalDelete($id,$name,'Borrar usuario','#deleteUserModal');
-        return <<<html
-</span>
-html;
     }
 
     public function btnDeleteControlador($id,$name)
